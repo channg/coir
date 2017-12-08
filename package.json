@@ -1,0 +1,29 @@
+{
+  "name": "pdc-cli",
+  "version": "0.0.1",
+  "description": "this project to init some folder,help you create new folder.",
+  "main": "bin/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://git.pandatv.com/xuezhiwen/pdc.git"
+  },
+  "keywords": [
+    "pdc"
+  ],
+  "author": "xuezhiwen",
+  "license": "ISC",
+  "bin": {
+    "pdc": "bin/index.js"
+  },
+  "dependencies": {
+    "colors": "^1.1.2",
+    "commander": "^2.12.2",
+    "download": "^6.2.5",
+    "node": "^9.2.0",
+    "tar": "^4.1.1",
+    "tar-stream": "^1.5.5"
+  }
+}
