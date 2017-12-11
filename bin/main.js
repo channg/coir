@@ -1,13 +1,25 @@
 const fs = require('fs')
+const pro = require('./progress')
 const paths = require('path')
 const utils = require('./utils')
 const pat = paths.resolve(__dirname, '../cache')
-var s = function (list,fnRex) {
+var s = function (list,fnRex,endString) {
+  pro(3)
   let fmList = getFileMessageList(paths.resolve(pat,'package/root'))
   checkFile(fmList,list,fnRex)
   let nfmList = getFileMessageList(paths.resolve(pat,'package/root'))
+  /**
+   * mv cache to work package
+   */
+  
+  pro(4)
   mv(nfmList,pat,process.cwd())
+  pro(5)
   utils.rmdirSync(paths.resolve(pat,'package'),function(e){})
+  /**
+   * clear cache
+   */
+  console.log(endString)
 }
 
 function  checkFile(fmList,list,fnRex) {

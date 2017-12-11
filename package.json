@@ -1,6 +1,6 @@
 {
   "name": "pdc-cli",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "this project to init some folder,help you create new folder.",
   "main": "bin/index.js",
   "scripts": {
@@ -23,6 +23,7 @@
     "commander": "^2.12.2",
     "download": "^6.2.5",
     "node": "^9.2.0",
+    "progress": "^2.0.0",
     "tar": "^4.1.1",
     "tar-stream": "^1.5.5"
   }

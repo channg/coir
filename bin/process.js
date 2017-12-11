@@ -1,4 +1,3 @@
-var statics = require('./static')
 var staticArray = []
 var checkArray = []
 const paths = require('path')
@@ -51,7 +50,7 @@ function _init(json){
  */
 function doneInPut() {
   process.stdin.emit('end')
-  pa(checkArray,staticArray.fileName)
+  pa(checkArray,staticArray.fileName,staticArray.end)
 }
 
 function doneInPutAndBreak() {
