@@ -14,7 +14,7 @@ function stdin(){
   process.stdin.on('readable', () => {
     var chunk = process.stdin.read()
     if(typeof chunk === 'string'){
-      chunk = chunk.slice(0,-2)
+      chunk = chunk.replace(/\r|\n|\r\n|\n\r/g,"")
       getStdIn(chunk)
     }
   });
