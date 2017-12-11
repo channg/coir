@@ -70,7 +70,7 @@ function checkChunk(chunk) {
       ot = returnInput(chunk,list[i].output)
     }
   }
-  if(ot){
+  if(ot!==undefined&&ot!==null){
     return ot
   }else{
     return "__again__"
@@ -101,7 +101,7 @@ function returnInput(chunk,output) {
   var ot = output.replace(/__input__/,function () {
     return chunk
   })
-  return `${ot} `
+  return `${ot}`
 }
 
 module.exports = _init
