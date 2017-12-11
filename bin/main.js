@@ -37,7 +37,7 @@ function  checkFile(fmList,list,fnRex) {
     }
   })
   /**
-   * 等待文件替换完毕再替换文件夹名称
+   *  wait
    */
   checkFileNameAndDirectoryName(fmList,list)
 }
@@ -48,7 +48,7 @@ function replaceOutput(output,list,fp) {
     if(ma = list[parseInt(p1)]){
       return ma
     }else{
-      return match
+      return ""
     }
   })
   fs.writeFileSync(fp,rStr)
