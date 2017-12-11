@@ -1,4 +1,4 @@
-#!/usr/bin/env node --inspect
+#!/usr/bin/env node
 var program = require('commander');
 var init = require('./init')
 var version = require("../package.json").version
