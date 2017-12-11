@@ -71,7 +71,6 @@ function checkChunk(chunk) {
     }
   }
   if(ot!==undefined){
-    console.log(ot)
     return ot
   }else{
     return "__again__"
