@@ -1,8 +1,9 @@
 #!/usr/bin/env node --inspect
 var program = require('commander');
 var init = require('./init')
+var version = require("../package.json").version
 program
-  .version('0.0.1')
+  .version(version)
   .command('init <name>')
   .action(function (dir) {
     init(dir)
