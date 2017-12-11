@@ -96,10 +96,6 @@ function mv(fmList,pat,cwd) {
   })
 }
 
-
-
-
 module.exports = s
 
 
-//s([ 'a', 'true' ],".*\\.js")

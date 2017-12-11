@@ -70,7 +70,8 @@ function checkChunk(chunk) {
       ot = returnInput(chunk,list[i].output)
     }
   }
-  if(ot!==undefined&&ot!==null){
+  if(ot!==undefined){
+    console.log(ot)
     return ot
   }else{
     return "__again__"
