@@ -101,7 +101,7 @@ function returnInput(chunk,output) {
   var ot = output.replace(/__input__/,function () {
     return chunk
   })
-  return ot
+  return `${ot} `
 }
 
 module.exports = _init
