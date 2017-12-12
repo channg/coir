@@ -16,7 +16,7 @@
 
 - This is a tool that helps you to create projects, folders and documents
 - It builds different files based on the command line user's input
-- No need to write code
+- Do without coding
 
 ## Try it
 ```
