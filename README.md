@@ -4,7 +4,7 @@
 pda 是一个工具，用来构建你想要的文件目录而，可以构建但不仅仅是构建你的代码
 > 使用 npm 
 ```
-npm install -g pda-cli 
+npm install -g pda
 ```
 
 * 通过 init  命令来构建
