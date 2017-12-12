@@ -1,6 +1,6 @@
 {
-  "name": "pdc-cli",
-  "version": "0.0.21",
+  "name": "pda",
+  "version": "0.0.1",
   "description": "this project to init some folder,help you create new folder.",
   "main": "bin/index.js",
   "scripts": {
@@ -8,15 +8,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://git.pandatv.com/xuezhiwen/pdc.git"
+    "url": "https://git.pandatv.com/xuezhiwen/pda.git"
   },
   "keywords": [
-    "pdc"
+    "pda"
   ],
   "author": "xuezhiwen",
   "license": "ISC",
   "bin": {
-    "pdc": "bin/index.js"
+    "pda": "bin/index.js"
   },
   "dependencies": {
     "colors": "^1.1.2",

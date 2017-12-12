@@ -15,9 +15,9 @@ module.exports =  function (url) {
     stream.pipe(tar.x({sync: true,
       C:pat}))
     stream.on("end",()=>{
-      var bufferStr = fs.readFileSync(pat + "/package/pdc.json","utf-8")
-      var pdcJson = utils.parseJson(utils.replaceN(bufferStr))
-      processJ(pdcJson)
+      var bufferStr = fs.readFileSync(pat + "/package/pda.json","utf-8")
+      var pdaJson = utils.parseJson(utils.replaceN(bufferStr))
+      processJ(pdaJson)
     })
   })
 }
