@@ -11,3 +11,12 @@
   <a href="https://www.npmjs.com/package/pda"><img alt="npm" src="https://img.shields.io/npm/v/pda.svg?style=flat-square"></a>
   <a href="https://github.com/channg/pda/blob/master/LICENSE"><img alt="license" src="https://img.shields.io/cocoapods/l/AFNetworking.svg"></a>
 </p>
+
+## what is this
+
+- This is a tool that helps you to create projects, folders and documents
+- It builds different files based on the command line user's input
+- No need to write code
+
+# document
+- <a href="https://channg.github.io/pda">you need read this </a>
