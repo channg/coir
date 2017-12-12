@@ -18,5 +18,11 @@
 - It builds different files based on the command line user's input
 - No need to write code
 
+## Try it
+```
+    $ npm i -g pda
+    pda init test
+```
+
 # document
 - <a href="https://channg.github.io/pda">you need read this </a>
