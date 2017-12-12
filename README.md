@@ -21,7 +21,7 @@
 ## Try it
 ```
     $ npm i -g pda
-    pda init test
+    $ pda init test
 ```
 
 # document
