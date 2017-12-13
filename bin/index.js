@@ -1,7 +1,7 @@
 #!/usr/bin/env node
-var program = require('commander');
-var init = require('./init')
-var version = require("../package.json").version
+let program = require('commander');
+const init = require('./init')
+const version = require("../package.json").version
 program
   .version(version)
   .command('init <name>')

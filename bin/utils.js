@@ -11,10 +11,10 @@ let rmdirSync = (function(){
   function iterator(url,dirs){
     var stat = fs.statSync(url);
     if(stat.isDirectory()){
-      dirs.unshift(url);//收集目录
+      dirs.unshift(url);//锟秸硷拷目录
       inner(url,dirs);
     }else if(stat.isFile()){
-      fs.unlinkSync(url);//直接删除文件
+      fs.unlinkSync(url);//直锟斤拷删锟斤拷锟侥硷拷
     }
   }
   function inner(path,dirs){
@@ -30,10 +30,10 @@ let rmdirSync = (function(){
     try{
       iterator(dir,dirs);
       for(var i = 0, el ; el = dirs[i++];){
-        fs.rmdirSync(el);//一次性删除所有收集到的目录
+        fs.rmdirSync(el);//一锟斤拷锟斤拷删锟斤拷锟斤拷锟斤拷锟秸硷拷锟斤拷锟斤拷目录
       }
       cb()
-    }catch(e){//如果文件或目录本来就不存在，fs.statSync会报错，不过我们还是当成没有异常发生
+    }catch(e){//锟斤拷锟斤拷募锟斤拷锟侥柯硷拷锟斤拷锟斤拷筒锟斤拷锟斤拷冢锟絝s.statSync锟结报锟斤拷锟斤拷锟斤拷锟斤拷锟角伙拷锟角碉拷锟斤拷没锟斤拷锟届常锟斤拷锟斤拷
       e.code === "ENOENT" ? cb() : cb(e);
     }
   }
