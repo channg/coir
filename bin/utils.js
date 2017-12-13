@@ -11,10 +11,10 @@ let rmdirSync = (function(){
   function iterator(url,dirs){
     var stat = fs.statSync(url);
     if(stat.isDirectory()){
-      dirs.unshift(url);//�ռ�Ŀ¼
+      dirs.unshift(url);
       inner(url,dirs);
     }else if(stat.isFile()){
-      fs.unlinkSync(url);//ֱ��ɾ���ļ�
+      fs.unlinkSync(url);
     }
   }
   function inner(path,dirs){
@@ -30,10 +30,10 @@ let rmdirSync = (function(){
     try{
       iterator(dir,dirs);
       for(var i = 0, el ; el = dirs[i++];){
-        fs.rmdirSync(el);//һ����ɾ�������ռ�����Ŀ¼
+        fs.rmdirSync(el);
       }
       cb()
-    }catch(e){//����ļ���Ŀ¼�����Ͳ����ڣ�fs.statSync�ᱨ���������ǻ��ǵ���û���쳣����
+    }catch(e){
       e.code === "ENOENT" ? cb() : cb(e);
     }
   }
