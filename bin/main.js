@@ -76,7 +76,7 @@ function getFileMessageList(path){
 function checkFileNameAndDirectoryName(fmList,list) {
   fmList.forEach(item=>{
     let fn = item.fileName
-    let rFn = fn.replace(/__([0-9]+)__/g,function (match,p1) {
+    let rFn = fn.replace(/__([0-9]+)[/[()/]]?__/g,function (match,p1) {
       let ma
       if(ma = list[parseInt(p1)]){
         return ma

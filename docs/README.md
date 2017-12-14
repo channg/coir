@@ -1,37 +1,37 @@
 # quick start
 **只需要一个命令构建你想要的目录结构**
 
-pda 是一个工具，用来构建你想要的文件目录而，可以构建但不仅仅是构建你的代码
+coir 是一个工具，用来构建你想要的文件目录而，可以构建但不仅仅是构建你的代码
 > 使用 npm 
 ```
-npm install -g pda
+npm install -g coir
 ```
 
 * 通过 init  命令来构建
 ```
-pda init <your-package>
+coir init <your-package>
 ```
->your-package 同样是一个npm 上的 共有包 例如，你输入  **pda init test**  ,pda将自动寻找当前 你配置的 npm 源路径下 名字为 **pda-test** 的npm package 并根据规则，生成选项，并最终构建你的文件仓库。
+>your-package 同样是一个npm 上的 共有包 例如，你输入  **coir init test**  ,coir将自动寻找当前 你配置的 npm 源路径下 名字为 **coir-test** 的npm package 并根据规则，生成选项，并最终构建你的文件仓库。
 >
->以**pda-**开头的仓库，叫pda源仓库
+>以**coir-**开头的仓库，叫coir源仓库
 
-使用已有的pda源仓库来测试
+使用已有的coir源仓库来测试
 ```
-pda init test // test = npm view pda-test
+coir init test // test = npm view coir-test
 ```
 
-* pda源仓库
->pda 源仓库 是自定义文件的核心，类似树形结构，源仓库就是根节点。
+* coir源仓库
+>coir 源仓库 是自定义文件的核心，类似树形结构，源仓库就是根节点。
 
-pda 源仓库 包含两大部分
+coir 源仓库 包含两大部分
 >目录结构 如下
 ```
 root/
-pda.json
+coir.json
 package.json
 ```
 
-**pda.json** 
+**coir.json** 
 ```
 {
   "check":[
@@ -50,12 +50,12 @@ package.json
   "end":"测试结束输入"
 }
 ```
->pda.json的内容是当用户输入 **pda init [someackage] ** 时，读取的配置文件，读取完毕后，将会自动进行配置选项。
+>coir.json的内容是当用户输入 **coir init [someackage] ** 时，读取的配置文件，读取完毕后，将会自动进行配置选项。
 
 * **check **
-check 是一个数组，里面的每个元素类似一系列问题。用户需要根据问题回答出答案。例如上面的配置，**pda init [some]**将会出现  
+check 是一个数组，里面的每个元素类似一系列问题。用户需要根据问题回答出答案。例如上面的配置，**coir init [some]**将会出现  
 ```
-$ pda init test
+$ coir init test
 [ Init      package ]
 [ Download  package ]
 [ Extract   package ]
@@ -89,14 +89,14 @@ $ pda init test
 
 
 **root**
->root 是pda源的一个根目录
->root下所有的文件包括文件夹都是pda源
+>root 是coir源的一个根目录
+>root下所有的文件包括文件夹都是coir源
 >当用户输入结束，用户的输入将根据output字段生成一个0~n长度的数组。
 >编译期间会将**root**目录下的所有文件名含有**__number__**的字符串替换为用户的输入
 
 like:
 ```
-$ pda init test
+$ coir init test
 [ Init      package ]
 [ Download  package ]
 [ Extract   package ]
@@ -115,4 +115,4 @@ test
 >如上面例子 在一个index.js内 含有**__0__**将会被替换为 test
 
 
-#come on ，begin your first pda sorce
+#come on ，begin your first coir sorce

@@ -1,6 +1,6 @@
 {
-  "name": "pda",
-  "version": "0.0.3",
+  "name": "coir",
+  "version": "0.0.1",
   "description": "this project to init some folder,help you create new folder.",
   "main": "bin/index.js",
   "scripts": {
@@ -8,15 +8,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/channg/pda"
+    "url": "https://github.com/channg/coir"
   },
   "keywords": [
-    "pda"
+    "coir"
   ],
   "author": "xuezhiwen",
   "license": "ISC",
   "bin": {
-    "pda": "bin/index.js"
+    "coir": "bin/index.js"
   },
   "dependencies": {
     "colors": "^1.1.2",
