@@ -11,7 +11,6 @@ var s = function (list,fnRex,endString) {
   /**
    * mv cache to work package
    */
-  
   pro(4)
   mv(nfmList,pat,process.cwd())
   pro(5)
@@ -43,13 +42,14 @@ function  checkFile(fmList,list,fnRex) {
 }
 
 function replaceOutput(output,list,fp) {
-  let rStr = output.replace(/__([0-9]+)__/g,function (match,p1) {
-    let ma
-    if(ma = list[parseInt(p1)]){
-      return ma
+  let rStr = output.replace(/__([0-9]+)(?:-([0-9]+))?__/g,function (match,p1,p2) {
+    let ma = ""
+    if(list[parseInt(p1)] instanceof Array){
+      ma = list[parseInt(p1)][p2]
     }else{
-      return ""
+      ma = list[parseInt(p1)]
     }
+    return ma
   })
   fs.writeFileSync(fp,rStr)
 }
@@ -76,13 +76,14 @@ function getFileMessageList(path){
 function checkFileNameAndDirectoryName(fmList,list) {
   fmList.forEach(item=>{
     let fn = item.fileName
-    let rFn = fn.replace(/__([0-9]+)[/[()/]]?__/g,function (match,p1) {
-      let ma
-      if(ma = list[parseInt(p1)]){
-        return ma
+    let rFn = fn.replace(/__([0-9]+)(?:-([0-9]+))?__/g,function (match,p1,p2) {
+      let ma = ""
+      if(list[parseInt(p1)] instanceof Array){
+        ma = list[parseInt(p1)][p2]
       }else{
-        return match
+        ma = list[parseInt(p1)]
       }
+      return ma
     })
     if(fn!==rFn){
       fs.renameSync(paths.resolve(item.path,item.fileName),paths.resolve(item.path,rFn))

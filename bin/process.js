@@ -94,9 +94,25 @@ function tips() {
   }
 }
 
+/**
+ * replace user input
+ * @param chunk
+ * @param output
+ * @returns {*}
+ */
 function returnInput(chunk,output) {
   if(output==='__exit__'){
     return '__exit__';
+  }
+  if(output instanceof Array){
+    let nOutput = []
+    output.forEach((item)=>{
+      let it = item.replace(/__input__/,function () {
+        return chunk
+      })
+      nOutput.push(it)
+    })
+    return nOutput
   }
   var ot = output.replace(/__input__/,function () {
     return chunk
