@@ -1,4 +1,4 @@
-var staticArray = []
+var staticArray = {}
 var checkArray = []
 const paths = require('path')
 const pat = paths.resolve(__dirname, '../cache')
@@ -50,7 +50,7 @@ function _init(json){
  */
 function doneInPut() {
   process.stdin.emit('end')
-  pa(checkArray,staticArray.fileName,staticArray.end)
+  pa(checkArray,staticArray)
 }
 
 function doneInPutAndBreak() {

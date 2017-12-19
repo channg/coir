@@ -3,9 +3,16 @@ const pro = require('./progress')
 const paths = require('path')
 const utils = require('./utils')
 const pat = paths.resolve(__dirname, '../cache')
-var s = function (list,fnRex,endString) {
+var s = function (list,{fileName,end,bin}) {
+  let fnRex = fileName
   pro(3)
+  /**
+   * first to get not change folder
+   */
   let fmList = getFileMessageList(paths.resolve(pat,'package/root'))
+  /**
+   * rename folder and file
+   */
   checkFile(fmList,list,fnRex)
   let nfmList = getFileMessageList(paths.resolve(pat,'package/root'))
   /**
@@ -14,11 +21,12 @@ var s = function (list,fnRex,endString) {
   pro(4)
   mv(nfmList,pat,process.cwd())
   pro(5)
-  utils.rmdirSync(paths.resolve(pat,'package'),function(e){})
+  userBin(bin,list,fnRex)
   /**
    * clear cache
    */
-  console.log(endString)
+  utils.rmdirSync(paths.resolve(pat,'package'),function(e){})
+  console.log(end)
 }
 
 function  checkFile(fmList,list,fnRex) {
@@ -95,6 +103,16 @@ function mv(fmList,pat,cwd) {
   fmList.forEach((item)=>{
     fs.renameSync(item.absolute,paths.resolve(cwd,item.fileName))
   })
+}
+
+async function userBin(bin,list,fnRex){
+  let binList = getFileMessageList(paths.resolve(pat,'package/bin'))
+  checkFile(binList,list,fnRex)
+  let options = {
+    cwd:paths.resolve(pat,'package/bin')
+  }
+  var output  = await utils.toExec(bin,options)
+  console.log(output)
 }
 
 module.exports = s

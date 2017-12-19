@@ -1,7 +1,22 @@
 const fs = require('fs')
+const q = require('q');
+var exec = require('child_process').exec;
 function parseJson(str) {
   return eval('(' +str + ')')
 }
+
+function toExec(cmdStr,options){
+  var deferred  = q.defer()
+  exec(cmdStr,options, function(err,stdout,stderr){
+    if(err) {
+      deferred.reject(stderr)
+    } else {
+      deferred.resolve(stdout)
+    }
+  });
+  return deferred.promise;
+}
+
 
 function replaceN(str) {
   return str.replace(/\n\s+/gm,'')
@@ -42,5 +57,6 @@ let rmdirSync = (function(){
 module.exports = {
   parseJson:parseJson,
   replaceN,replaceN,
-  rmdirSync:rmdirSync
+  rmdirSync:rmdirSync,
+  toExec:toExec
 }
