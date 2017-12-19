@@ -5,6 +5,7 @@ const utils = require('./utils')
 const g = require('./global')
 const pat = paths.resolve(__dirname, '../cache')
 let s =async function (list,ot) {
+  const cwd = process.cwd()
   let fnRex = ot.fileName
   let bin = ot.bin
   pro(3)
@@ -22,7 +23,7 @@ let s =async function (list,ot) {
   await userBin(bin,list,fnRex)
   let nfmList = getFileMessageList(paths.resolve(pat,'package/root'))
   pro(4)
-  mv(nfmList,pat,process.cwd())
+  mv(nfmList,pat,cwd)
   pro(5)
 
   /**
@@ -104,8 +105,7 @@ function checkFileNameAndDirectoryName(fmList,list) {
   })
 }
 
-function mv(fmList,cwd) {
-  
+function mv(fmList,pat,cwd) {
   fmList.forEach((item)=>{
     fs.renameSync(item.absolute,paths.resolve(cwd,item.fileName))
   })

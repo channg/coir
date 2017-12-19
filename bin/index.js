@@ -1,4 +1,4 @@
-#!/usr/bin/env node
+#!/usr/bin/env node --inspect
 const utils = require('./utils')
 const paths = require('path')
 const pat = paths.resolve(__dirname, '../cache')
@@ -20,9 +20,7 @@ program
 program
   .command('i [name]')
   .action(function(env){
-    console.log(env)
     init(env)
   });
-
 
 program.parse(process.argv);
