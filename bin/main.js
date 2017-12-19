@@ -2,9 +2,11 @@ const fs = require('fs')
 const pro = require('./progress')
 const paths = require('path')
 const utils = require('./utils')
+const g = require('./global')
 const pat = paths.resolve(__dirname, '../cache')
-var s = function (list,{fileName,end,bin}) {
-  let fnRex = fileName
+let s =async function (list,ot) {
+  let fnRex = ot.fileName
+  let bin = ot.bin
   pro(3)
   /**
    * first to get not change folder
@@ -14,19 +16,20 @@ var s = function (list,{fileName,end,bin}) {
    * rename folder and file
    */
   checkFile(fmList,list,fnRex)
-  let nfmList = getFileMessageList(paths.resolve(pat,'package/root'))
   /**
    * mv cache to work package
    */
+  await userBin(bin,list,fnRex)
+  let nfmList = getFileMessageList(paths.resolve(pat,'package/root'))
   pro(4)
   mv(nfmList,pat,process.cwd())
   pro(5)
-  userBin(bin,list,fnRex)
+
   /**
    * clear cache
    */
   utils.rmdirSync(paths.resolve(pat,'package'),function(e){})
-  console.log(end)
+  console.log(ot.end)
 }
 
 function  checkFile(fmList,list,fnRex) {
@@ -59,6 +62,7 @@ function replaceOutput(output,list,fp) {
     }
     return ma
   })
+  rStr = g(rStr)
   fs.writeFileSync(fp,rStr)
 }
 
@@ -93,13 +97,15 @@ function checkFileNameAndDirectoryName(fmList,list) {
       }
       return ma
     })
+    rFn = g(rFn)
     if(fn!==rFn){
       fs.renameSync(paths.resolve(item.path,item.fileName),paths.resolve(item.path,rFn))
     }
   })
 }
 
-function mv(fmList,pat,cwd) {
+function mv(fmList,cwd) {
+  
   fmList.forEach((item)=>{
     fs.renameSync(item.absolute,paths.resolve(cwd,item.fileName))
   })
