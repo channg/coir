@@ -3,7 +3,8 @@ var replaceN = require('./utils').replaceN
 const exec = require('child_process').exec
 const pro = require('./progress')
 var donlows = require('./download')
-module.exports = function (name) {
+module.exports = function (name,options) {
+  console.log(options)
   var coirName = `coir-${name}`
   pro(0)
   exec(`npm view ${coirName}`,function (error, stdout, stderr) {

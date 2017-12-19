@@ -1,4 +1,4 @@
-#!/usr/bin/env node --inspect
+#!/usr/bin/env node
 const utils = require('./utils')
 const paths = require('path')
 const pat = paths.resolve(__dirname, '../cache')
@@ -12,15 +12,15 @@ utils.rmdirSync(paths.resolve(pat,'package'))
 
 program
   .version(version)
-  .command('init [name]')
-  .action(function (dir) {
-    console.log(dir)
-    init(dir)
-  })
+
 program
-  .command('i [name]')
-  .action(function(env){
-    init(env)
-  });
+  .command('init [name]')
+  .alias('i')
+  .description('init the coir package')
+  .option("-c, --cache", "use cache to init this package")
+  .action(function (dir,options) {
+    init(dir,{cache:options.cache?true:false})
+  })
+
 
 program.parse(process.argv);
