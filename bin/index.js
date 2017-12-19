@@ -12,9 +12,17 @@ utils.rmdirSync(paths.resolve(pat,'package'))
 
 program
   .version(version)
-  .command('init <name>')
+  .command('init [name]')
   .action(function (dir) {
+    console.log(dir)
     init(dir)
   })
+program
+  .command('i [name]')
+  .action(function(env){
+    console.log(env)
+    init(env)
+  });
+
 
 program.parse(process.argv);
