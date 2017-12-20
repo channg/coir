@@ -6,11 +6,18 @@ const utils = require('./utils')
 const download = require('download')
 const processJ = require('./process')
 let Duplex = require('stream').Duplex
-var pat = path.resolve(__dirname, '../cache')
-module.exports =  function (url) {
-  pro(1)
-  download(url).then((data) => {
-    var stream = bufferToStream(data)
+let pat = path.resolve(__dirname, '../cache')
+let gcache = path.resolve(__dirname, '../gcache')
+module.exports =  function (url,options,name,cachePath) {
+  if(options.cache){
+    pro(1)
+    download(url).then(data => {
+      fs.writeFileSync(path.resolve(gcache, name + '.tgz'), data);
+    });
+  }
+  if(cachePath){
+    pro(6)
+    let stream = fs.createReadStream(cachePath);
     pro(2)
     stream.pipe(tar.x({sync: true,
       C:pat}))
@@ -19,7 +26,23 @@ module.exports =  function (url) {
       var coirJson = utils.parseJson(utils.replaceN(bufferStr))
       processJ(coirJson)
     })
-  })
+  }else{
+    pro(1)
+    download(url).then((data) => {
+      let stream = bufferToStream(data)
+      pro(2)
+      stream.pipe(tar.x({sync: true,
+        C:pat}))
+      stream.on("end",()=>{
+        var bufferStr = fs.readFileSync(pat + "/package/coir.json","utf-8")
+        var coirJson = utils.parseJson(utils.replaceN(bufferStr))
+        processJ(coirJson)
+      })
+    })
+  }
+  
+  
+
 }
 
 

@@ -7,7 +7,8 @@ module.exports.log =[
   '[ Extract   package ]'.blue,
   '[      Compile      ]'.blue,
   '[      Building     ]'.blue,
-  '[ Clear      cache  ]'.blue
+  '[ Clear      cache  ]'.blue,
+  '[ Use        cache  ]'.blue
 
 ]
 

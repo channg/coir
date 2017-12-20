@@ -1,6 +1,7 @@
 const fs = require('fs')
 const q = require('q');
 var exec = require('child_process').exec;
+const paths = require('path')
 function parseJson(str) {
   return eval('(' +str + ')')
 }
@@ -54,9 +55,65 @@ let rmdirSync = (function(){
   }
 })();
 
+
+function getFileMessageList(path){
+  let mList = []
+  let list = fs.readdirSync(path)
+  for(let i = 0;i<list.length;i++){
+    let fPath = paths.resolve(path,list[i])
+    let stat = fs.statSync(fPath)
+    mList.push({
+      fileName:list[i],
+      path:path,
+      absolute:fPath,
+      isFile:stat.isFile(),
+      isDirectory:stat.isDirectory()
+    })
+  }
+  return mList
+}
+
+function copyDir(src, dist, callback) {
+  fs.access(dist, function(err){
+    if(err){
+      fs.mkdirSync(dist);
+    }
+    _copy(null, src, dist);
+  });
+  function _copy(err, src, dist) {
+    if(err){
+      callback(err);
+    } else {
+      fs.readdir(src, function(err, paths) {
+        if(err){
+          callback(err)
+        } else {
+          paths.forEach(function(path) {
+            var _src = src + '/' +path;
+            var _dist = dist + '/' +path;
+            fs.stat(_src, function(err, stat) {
+              if(err){
+                callback(err);
+              } else {
+                if(stat.isFile()) {
+                  fs.writeFileSync(_dist, fs.readFileSync(_src));
+                } else if(stat.isDirectory()) {
+                  copyDir(_src, _dist, callback)
+                }
+              }
+            })
+          })
+        }
+      })
+    }
+  }
+}
+
 module.exports = {
   parseJson:parseJson,
   replaceN,replaceN,
   rmdirSync:rmdirSync,
-  toExec:toExec
+  toExec:toExec,
+  getFileMessageList:getFileMessageList,
+  copyDir:copyDir
 }
