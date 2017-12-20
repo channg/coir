@@ -10,7 +10,7 @@ let pat = path.resolve(__dirname, '../cache')
 let gcache = path.resolve(__dirname, '../gcache')
 module.exports =  function (url,options,name,cachePath) {
   if(options.cache){
-    pro(1)
+    pro(7)
     download(url).then(data => {
       fs.writeFileSync(path.resolve(gcache, name + '.tgz'), data);
     });

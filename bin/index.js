@@ -4,6 +4,7 @@ const paths = require('path')
 const pat = paths.resolve(__dirname, '../cache')
 let program = require('commander');
 const init = require('./init')
+const clean = require('./clean')
 const version = require("../package.json").version
 /**
  * in the beginning ,clean cache
@@ -22,5 +23,10 @@ program
     init(dir,{cache:options.cache?true:false})
   })
 
+program
+  .command('clean')
+  .action(()=>{
+    clean()
+  })
 
 program.parse(process.argv);
