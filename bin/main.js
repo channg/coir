@@ -5,6 +5,7 @@ const utils = require('./utils')
 const g = require('./global')
 const pat = paths.resolve(__dirname, '../cache')
 let s =async function (list,ot) {
+  list = parseInput(list)
   const cwd = process.cwd()
   let fnRex = ot.fileName
   let bin = ot.bin
@@ -25,7 +26,6 @@ let s =async function (list,ot) {
   pro(4)
   mv(nfmList,pat,cwd)
   pro(5)
-
   /**
    * clear cache
    */
@@ -54,15 +54,7 @@ function  checkFile(fmList,list,fnRex) {
 }
 
 function replaceOutput(output,list,fp) {
-  let rStr = output.replace(/__([0-9]+)(?:-([0-9]+))?__/g,function (match,p1,p2) {
-    let ma = ""
-    if(list[parseInt(p1)] instanceof Array){
-      ma = list[parseInt(p1)][p2]
-    }else{
-      ma = list[parseInt(p1)]
-    }
-    return ma
-  })
+  let rStr = replaceNum(output,list)
   rStr = g(rStr)
   fs.writeFileSync(fp,rStr)
 }
@@ -89,15 +81,7 @@ function getFileMessageList(path){
 function checkFileNameAndDirectoryName(fmList,list) {
   fmList.forEach(item=>{
     let fn = item.fileName
-    let rFn = fn.replace(/__([0-9]+)(?:-([0-9]+))?__/g,function (match,p1,p2) {
-      let ma = ""
-      if(list[parseInt(p1)] instanceof Array){
-        ma = list[parseInt(p1)][p2]
-      }else{
-        ma = list[parseInt(p1)]
-      }
-      return ma
-    })
+    let rFn = replaceNum(fn,list)
     rFn = g(rFn)
     if(fn!==rFn){
       fs.renameSync(paths.resolve(item.path,item.fileName),paths.resolve(item.path,rFn))
@@ -120,6 +104,42 @@ async function userBin(bin,list,fnRex){
   var output  = await utils.toExec(bin,options)
   console.log(output)
 }
+
+function parseInput(list){
+  let nl = []
+  list.forEach((i1)=>{
+    if(i1 instanceof Array) {
+      let nnl = []
+      i1.forEach(i2 => {
+        let reInput = replaceNum(i2,list)
+        reInput = g(reInput)
+        nnl.push(reInput)
+      })
+      nl.push(nnl)
+    }else{
+      let reInput = replaceNum(i1,list)
+      reInput = g(reInput)
+      nl.push(reInput)
+    }
+  })
+  return nl
+}
+
+function replaceNum(str,list){
+  return str.replace(/__([0-9]+)(?:-([0-9]+))?__/g,function (match,p1,p2) {
+    let ma = ""
+    if(list[parseInt(p1)] instanceof Array){
+      if(!p2) p2=0
+      ma = list[parseInt(p1)][p2]
+    }else{
+      ma = list[parseInt(p1)]
+    }
+    return ma
+  })
+  
+}
+
+
 
 module.exports = s
 

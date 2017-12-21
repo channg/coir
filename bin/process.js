@@ -4,7 +4,7 @@ const paths = require('path')
 const pat = paths.resolve(__dirname, '../cache')
 const utils = require('./utils')
 let pa = require('./main')
-
+let againStr = ""
 function consoleL(log) {
     console.log(log)
 }
@@ -21,15 +21,31 @@ function stdin(){
 }
 
 function getStdIn(chunk){
-  var ot = checkChunk(chunk)
-  if(ot === '__again__'){
+  let ot = checkChunk(chunk)
+  if(ot === '__reenter__'){
+    tips()
+  }
+  else if (ot.indexOf('__again__')===0){
+    let bs
+    ot = ot.replace('__again__',"")
+    let eachStr = staticArray.check[checkArray.length].each
+    if(eachStr){
+      bs = eachStr.replace(/__input__/, () => {
+        return ot
+      })
+      againStr += bs
+    }
     tips()
   }
   else if (ot === '__exit__'){
     doneInPutAndBreak()
   }
   else{
-    checkArray.push(ot)
+    if(ot === '__next__'){
+      checkArray.push(againStr)
+    }else{
+      checkArray.push(ot)
+    }
     checkIsDone()?tips():doneInPut()
   }
 }
@@ -59,7 +75,7 @@ function doneInPutAndBreak() {
 }
 
 /**
- * 检查输入值，如果匹配返回对应结果，否则return __again__
+ * check it ,if false return __reenter__
  * @param chunk
  */
 function checkChunk(chunk) {
@@ -73,7 +89,7 @@ function checkChunk(chunk) {
   if(ot!==undefined){
     return ot
   }else{
-    return "__again__"
+    return "__reenter__"
   }
 }
 
@@ -107,17 +123,25 @@ function returnInput(chunk,output) {
   if(output instanceof Array){
     let nOutput = []
     output.forEach((item)=>{
-      let it = item.replace(/__input__/,function () {
-        return chunk
-      })
+      let it = checkOt(item,chunk)
       nOutput.push(it)
     })
     return nOutput
   }
-  var ot = output.replace(/__input__/,function () {
-    return chunk
-  })
+  var ot = checkOt(output,chunk)
   return `${ot}`
 }
+
+function checkOt(ot,chunk) {
+  let it = ot.replace(/__input__/,function () {
+    return chunk
+  })
+  if(it==='__again__'){
+    return `__again__${chunk}`
+  }
+  return it
+}
+
+
 
 module.exports = _init

@@ -1,4 +1,5 @@
 const utils = require("./utils")
+const progress = require("./progress")
 const path = require('path')
 let gcache = path.resolve(__dirname, '../gcache')
 module.exports = function () {
@@ -8,4 +9,5 @@ module.exports = function () {
       utils.rmdirSync(item.absolute)
     }
   })
+  progress(5)
 }
