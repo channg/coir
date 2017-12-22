@@ -102,6 +102,7 @@ async function userBin(bin,list,fnRex){
     cwd:paths.resolve(pat,'package/bin')
   }
   var output  = await utils.toExec(bin,options)
+  output = output.replace(/(\n|\r\n|r)$/,"")
   console.log(output)
 }
 

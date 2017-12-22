@@ -10,5 +10,5 @@
 
 <p style="margin-top:50px">
 [GitHub](https://github.com/QingWei-Li/docsify/)
-[Get Started](#quick-start)
+[Get Started](#COIR)
 </p>

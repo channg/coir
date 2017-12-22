@@ -1,2 +1,5 @@
 .idea
 node_modules
+cache/package
+gcache/*.tgz
+docs

@@ -83,13 +83,17 @@ function doneInPutAndBreak() {
  * @param chunk
  */
 function checkChunk(chunk) {
+  let isCheck = false
   var ot
   var jump
   var list = staticArray.check[checkArray.length].input
   for(let i = 0;i<list.length;i++){
     if(new RegExp(list[i].test).test(chunk)){
-      ot = returnInput(chunk,list[i].output)
-      jump = list[i].jump
+      if(!isCheck){
+        ot = returnInput(chunk,list[i].output)
+        jump = list[i].jump
+        isCheck= true
+      }
     }
   }
   if(ot!==undefined){

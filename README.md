@@ -25,4 +25,4 @@
 ```
 
 # document
-- <a href="https://channg.github.io/coir">you need read this </a>
+- <a href="https://channg.github.io/coir">(中文文档)</a>
