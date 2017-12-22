@@ -5,7 +5,7 @@ const paths = require('path')
 function parseJson(str) {
   return eval('(' +str + ')')
 }
-
+let copyIndex = 0
 function toExec(cmdStr,options){
   var deferred  = q.defer()
   exec(cmdStr,options, function(err,stdout,stderr){
@@ -78,7 +78,12 @@ function copyDir(src, dist, callback) {
     if(err){
       fs.mkdirSync(dist);
     }
+    copyIndex++
     _copy(null, src, dist);
+    copyIndex--
+    if(copyIndex===0){
+      callback()
+    }
   });
   function _copy(err, src, dist) {
     if(err){

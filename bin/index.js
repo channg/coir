@@ -2,9 +2,10 @@
 const utils = require('./utils')
 const paths = require('path')
 const pat = paths.resolve(__dirname, '../cache')
-let program = require('commander');
+const program = require('commander')
 const init = require('./init')
 const clean = require('./clean')
+const link = require('./link')
 const version = require("../package.json").version
 /**
  * in the beginning ,clean cache
@@ -19,7 +20,7 @@ program
   .alias('i')
   .description('init the coir package')
   .option("-c, --cache", "use cache to init this package")
-  .action(function (dir,options) {
+  .action((dir,options) => {
     init(dir,{cache:options.cache?true:false})
   })
 
@@ -27,6 +28,12 @@ program
   .command('clean')
   .action(()=>{
     clean()
+  })
+
+program
+  .command('link')
+  .action(()=>{
+    link()
   })
 
 program.parse(process.argv);
