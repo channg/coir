@@ -1,3 +1,3 @@
 - **基础**
-    - [quick start](README.md)
+    - [quick start](quick.md)
     - [Advanced](Advanced.md)
