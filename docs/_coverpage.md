@@ -1,8 +1,8 @@
 ![logo](img/logo.svg)
 
-# coir ~0.0.1
+# coir 1.0.0
 
-> coir is a tools to Easy to create, configurable, initialize project.
+>   Coir :   Scaffold 's scaffold.
 
 - simple
 - Easy to use

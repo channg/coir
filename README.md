@@ -4,7 +4,7 @@
   </a>
 </p>
 <p align="center">
-  A tools to Easy to create, configurable, initialize project.
+    Coir :   Scaffold 's scaffold.
 </p>
 <p align="center">
   <a href="https://travis-ci.org/channg/coir"><img alt="Travis Status" src="https://img.shields.io/travis/QingWei-Li/docsify/master.svg?style=flat-square"></a>
@@ -21,8 +21,8 @@
 ## Try it
 ```
     $ npm i -g coir
-    $ coir init test
+    $ coir init res
 ```
 
 # document
-- <a href="https://channg.github.io/coir">(中文文档)</a>
+- <a href="https://channg.github.io/coir">()</a>
