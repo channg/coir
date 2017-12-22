@@ -21,7 +21,7 @@ function stdin(){
 }
 
 function getStdIn(chunk){
-  let ot = checkChunk(chunk)
+  let {ot,jump} = checkChunk(chunk)
   if(ot === '__reenter__'){
     tips()
   }
@@ -41,10 +41,14 @@ function getStdIn(chunk){
     doneInPutAndBreak()
   }
   else{
+    
     if(ot === '__next__'){
       checkArray.push(againStr)
     }else{
       checkArray.push(ot)
+    }
+    if(jump){
+      jumpTo(jump)
     }
     checkIsDone()?tips():doneInPut()
   }
@@ -80,14 +84,16 @@ function doneInPutAndBreak() {
  */
 function checkChunk(chunk) {
   var ot
+  var jump
   var list = staticArray.check[checkArray.length].input
   for(let i = 0;i<list.length;i++){
     if(new RegExp(list[i].test).test(chunk)){
       ot = returnInput(chunk,list[i].output)
+      jump = list[i].jump
     }
   }
   if(ot!==undefined){
-    return ot
+    return {ot:ot,jump:jump}
   }else{
     return "__reenter__"
   }
@@ -142,6 +148,18 @@ function checkOt(ot,chunk) {
   return it
 }
 
+function jumpTo(num){
+  let step = num
+  if(step>0){
+    for(;step--;step<=0){
+      checkArray.push("")
+    }
+  }else{
+    for(;step++;step>=0){
+      checkArray.pop()
+    }
+  }
+}
 
 
 module.exports = _init
