@@ -1,0 +1,7 @@
+* text=auto  
+*.ts text
+*.json text
+*.js text
+*.json text
+*.md text
+*.svg -test
