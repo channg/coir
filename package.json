@@ -1,6 +1,6 @@
 {
   "name": "coir",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "this project to init some folder,help you create new folder.",
   "main": "bin/index.js",
   "scripts": {
@@ -16,7 +16,7 @@
   "author": "xuezhiwen",
   "license": "ISC",
   "bin": {
-    "coir": "bin/index.js"
+    "coir": "./bin/index.js"
   },
   "dependencies": {
     "colors": "^1.1.2",
