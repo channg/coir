@@ -19,19 +19,23 @@ program
   .command('init [name]')
   .alias('i')
   .description('init the coir package')
-  .option("-c, --cache", "use cache to init this package")
+  .option("-s, --save", "save the package to cache")
   .action((dir,options) => {
     init(dir,{cache:options.cache?true:false})
   })
 
 program
   .command('clean')
+  .alias('c')
+  .description('clean the cache')
   .action(()=>{
     clean()
   })
 
 program
   .command('link')
+  .alias('l')
+  .description('link the coir package')
   .action(()=>{
     link()
   })
