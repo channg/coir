@@ -20,7 +20,7 @@ coir i res
 ```
 将coir-res模块缓存到本地
 ```
-coir i res -c
+coir i res -s
 ```
 想要清理本地的缓存文件
 ```
