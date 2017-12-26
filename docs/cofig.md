@@ -9,6 +9,7 @@
       "color":"green",
       "input":[
         {
+          "jump":"1",
           "test":".*",
           "output":[
             "__input__"
@@ -59,6 +60,8 @@
 `tip`tip显示的颜色，具体颜色参考<a href="https://www.npmjs.com/package/colors">colors</a>
 ### input
 `input`也是一个数组用于控制用户的输入内容
+#### jump
+`jump`用户用户跳跃输入，当用户匹配了此选项，可以进行跳跃，`value`为 数字，例如`'jump':'1''`，当用户输入匹配时，将会跳过中间一个选项。
 #### test
 `test`是一个正则字符串，用于匹配用户的输入，如果匹配则返回`output`的内容，否则，匹配下一个，如果无用户匹配内容，将重新提示输入。
 #### output

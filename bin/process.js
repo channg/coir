@@ -99,7 +99,7 @@ function checkChunk(chunk) {
   if(ot!==undefined){
     return {ot:ot,jump:jump}
   }else{
-    return "__reenter__"
+    return {ot:"__reenter__",jump:jump}
   }
 }
 
