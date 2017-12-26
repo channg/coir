@@ -47,4 +47,5 @@ ps: `__0-0__` ===`__0__`
 code in <a href="https://github.com/channg/coir/blob/master/bin/global.js">global.js</a>
 
 `__path__`
+<br/>
     > `__path__`将被编译为 `process.cwd()`
