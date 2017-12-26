@@ -84,7 +84,11 @@ function checkFileNameAndDirectoryName(fmList,list) {
     let rFn = replaceNum(fn,list)
     rFn = g(rFn)
     if(fn!==rFn){
-      fs.renameSync(paths.resolve(item.path,item.fileName),paths.resolve(item.path,rFn))
+      if(rFn===""){
+        utils.rmdirSync(paths.resolve(item.path,item.fileName))
+      }else{
+        fs.renameSync(paths.resolve(item.path,item.fileName),paths.resolve(item.path,rFn))
+      }
     }
   })
 }

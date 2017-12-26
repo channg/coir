@@ -19,6 +19,7 @@
     "coir": "./bin/index.js"
   },
   "dependencies": {
+    "ansi-escapes": "^3.0.0",
     "colors": "^1.1.2",
     "commander": "^2.12.2",
     "download": "^6.2.5",

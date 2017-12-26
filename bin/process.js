@@ -1,12 +1,15 @@
 var staticArray = {}
+const ansiEscapes = require('ansi-escapes')
 var checkArray = []
+var canReWrite = false
 const paths = require('path')
 const pat = paths.resolve(__dirname, '../cache')
 const utils = require('./utils')
 let pa = require('./main')
 let againStr = ""
+let againList = []
 function consoleL(log) {
-    console.log(log)
+  process.stdout.write(log)
 }
 
 function stdin(){
@@ -23,7 +26,13 @@ function stdin(){
 function getStdIn(chunk){
   let {ot,jump} = checkChunk(chunk)
   if(ot === '__reenter__'){
-    tips()
+    if(canReWrite){
+      process.stdout.write(ansiEscapes.cursorUp()+ansiEscapes.eraseDown+">>".red+"fail enter,please enter again !")
+    }
+    else{
+      canReWrite = true
+      process.stdout.write(">>".red+" fail enter,please enter again !")
+    }
   }
   else if (ot.indexOf('__again__')===0){
     let bs
@@ -35,6 +44,9 @@ function getStdIn(chunk){
       })
       againStr += bs
     }
+    againList.push(ot)
+    cleanCmd(againList)
+    canReWrite = false
     tips()
   }
   else if (ot === '__exit__'){
@@ -43,10 +55,14 @@ function getStdIn(chunk){
   else{
     
     if(ot === '__next__'){
+      againList = []
+      cleanCmd()
       checkArray.push(againStr)
     }else{
+      cleanCmd(chunk)
       checkArray.push(ot)
     }
+    canReWrite = false
     if(jump){
       jumpTo(jump)
     }
@@ -78,6 +94,31 @@ function doneInPutAndBreak() {
   utils.rmdirSync(paths.resolve(pat,'package'))
 }
 
+
+function cleanCmd(out) {
+  let count = getRexCount("\n",staticArray.check[checkArray.length].tip)
+  if(!out){
+    process.stdout.write(ansiEscapes.cursorUp(count+1)+ansiEscapes.eraseDown)
+  }else{
+    if(canReWrite){
+      if (againList.length>1){
+        process.stdout.write(ansiEscapes.cursorUp(count+3)+ansiEscapes.eraseDown)
+      }else{
+        process.stdout.write(ansiEscapes.cursorUp(count+2)+ansiEscapes.eraseDown)
+      }
+      tips()
+      process.stdout.write(`(${out})\n`)
+    }else{
+      if (againList.length>1){
+        process.stdout.write(ansiEscapes.cursorUp(count+2)+ansiEscapes.eraseDown)
+      }else{
+        process.stdout.write(ansiEscapes.cursorUp(count+ 1)+ansiEscapes.eraseDown)
+      }
+      tips()
+      process.stdout.write(`(${out})\n`)
+    }
+  }
+}
 /**
  * check it ,if false return __reenter__
  * @param chunk
@@ -163,6 +204,15 @@ function jumpTo(num){
       checkArray.pop()
     }
   }
+}
+
+function getRexCount(rex,str){
+  let count = 0
+  str.replace(new RegExp(rex,"g"),(match)=>{
+    count++
+    return match
+  })
+  return count
 }
 
 
