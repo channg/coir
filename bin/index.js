@@ -1,4 +1,4 @@
-#!/usr/bin/env node --inspect-brk
+#!/usr/bin/env node
 const utils = require('./utils')
 const paths = require('path')
 const pat = paths.resolve(__dirname, '../cache')
