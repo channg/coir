@@ -56,6 +56,8 @@
 `check`是一个数组，每个元素是控制提示以及用户的输出。
 ### tip
 `tip`是显示给用户的信息。
+### default
+`default`表示当用户没有回车的默认值。
 ### color
 `tip`tip显示的颜色，具体颜色参考<a href="https://www.npmjs.com/package/colors">colors</a>
 ### input

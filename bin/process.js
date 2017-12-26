@@ -24,6 +24,9 @@ function stdin(){
 }
 
 function getStdIn(chunk){
+  if(chunk===""){
+    chunk = staticArray.check[checkArray.length].default
+  }
   let {ot,jump} = checkChunk(chunk)
   if(ot === '__reenter__'){
     if(canReWrite){
