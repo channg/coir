@@ -1,4 +1,4 @@
 - [**基础**](README.md)
     - [quick start](quick.md)
-    - [Advanced](Advanced.md)
     - [起步](started.md)
+    - [配置]
