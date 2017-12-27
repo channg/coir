@@ -33,7 +33,7 @@ let s =async function (list,ot) {
   /**
    * clear cache
    */
-  utils.rmdirSync(paths.resolve(pat,'package'),function(e){})
+  //utils.rmdirSync(paths.resolve(pat,'package'))
   process.stdout.write(binOt)
   console.log(ot.end)
 }
@@ -90,9 +90,9 @@ function checkFileNameAndDirectoryName(fmList,list) {
     rFn = g(rFn)
     if(fn!==rFn){
       if(rFn===""){
-        utils.rmdirSync(paths.resolve(item.path,item.fileName))
+        //utils.rmdirSync(paths.resolve(item.path,item.fileName))
       }else{
-        fse.moveSync(paths.resolve(item.path,item.fileName),paths.resolve(item.path,rFn))
+        fse.copySync(paths.resolve(item.path,item.fileName),paths.resolve(item.path,rFn))
       }
     }
   })
@@ -100,7 +100,9 @@ function checkFileNameAndDirectoryName(fmList,list) {
 
 function mv(fmList,pat,cwd) {
   fmList.forEach((item)=>{
-    fse.moveSync(item.absolute,paths.resolve(cwd,item.fileName))
+    if(!/__\w+__/.test(item.fileName)){
+      fse.moveSync(item.absolute,paths.resolve(cwd,item.fileName),{overwrite:true})
+    }
   })
 }
 

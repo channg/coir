@@ -2,3 +2,4 @@
 node_modules
 cache/package
 gcache/*.tgz
+package-lock.json
