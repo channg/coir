@@ -1,4 +1,5 @@
 const fs = require('fs')
+const fse = require('fs-extra')
 const q = require('q');
 var exec = require('child_process').exec;
 const paths = require('path')
@@ -74,44 +75,7 @@ function getFileMessageList(path){
 }
 
 function copyDir(src, dist, callback) {
-  fs.access(dist, function(err){
-    if(err){
-      fs.mkdirSync(dist);
-    }
-    copyIndex++
-    _copy(null, src, dist);
-    copyIndex--
-    if(copyIndex===0){
-      callback()
-    }
-  });
-  function _copy(err, src, dist) {
-    if(err){
-      callback(err);
-    } else {
-      fs.readdir(src, function(err, paths) {
-        if(err){
-          callback(err)
-        } else {
-          paths.forEach(function(path) {
-            var _src = src + '/' +path;
-            var _dist = dist + '/' +path;
-            fs.stat(_src, function(err, stat) {
-              if(err){
-                callback(err);
-              } else {
-                if(stat.isFile()) {
-                  fs.writeFileSync(_dist, fs.readFileSync(_src));
-                } else if(stat.isDirectory()) {
-                  copyDir(_src, _dist, callback)
-                }
-              }
-            })
-          })
-        }
-      })
-    }
-  }
+  fse.copy(src,dist,callback)
 }
 
 module.exports = {

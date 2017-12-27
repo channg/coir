@@ -1,4 +1,5 @@
 const fs = require('fs')
+const fse = require('fs-extra')
 const pro = require('./progress')
 const paths = require('path')
 const utils = require('./utils')
@@ -91,7 +92,7 @@ function checkFileNameAndDirectoryName(fmList,list) {
       if(rFn===""){
         utils.rmdirSync(paths.resolve(item.path,item.fileName))
       }else{
-        fs.renameSync(paths.resolve(item.path,item.fileName),paths.resolve(item.path,rFn))
+        fse.moveSync(paths.resolve(item.path,item.fileName),paths.resolve(item.path,rFn))
       }
     }
   })
@@ -99,7 +100,7 @@ function checkFileNameAndDirectoryName(fmList,list) {
 
 function mv(fmList,pat,cwd) {
   fmList.forEach((item)=>{
-    fs.renameSync(item.absolute,paths.resolve(cwd,item.fileName))
+    fse.moveSync(item.absolute,paths.resolve(cwd,item.fileName))
   })
 }
 
