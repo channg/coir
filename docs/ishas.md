@@ -24,12 +24,12 @@ coir init doc
 
 ## coir-res
 > create a coir Configuration Project
+
 ### first install the coir
 ```
 npm install -g coir
 ```
-
 ### then
 ```
-coir init doc
+coir init res
 ```
