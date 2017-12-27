@@ -158,9 +158,9 @@ function checkIsDone() {
 function tips() {
   let c
   if(c = staticArray.check[checkArray.length].color){
-    consoleL(staticArray.check[checkArray.length].tip[c])
+    consoleL("?  ".red + staticArray.check[checkArray.length].tip[c])
   }else{
-    consoleL(staticArray.check[checkArray.length].tip)
+    consoleL("?  ".red + staticArray.check[checkArray.length].tip)
   }
 }
 

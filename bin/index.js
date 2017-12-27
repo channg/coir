@@ -6,12 +6,14 @@ const program = require('commander')
 const init = require('./init')
 const clean = require('./clean')
 const link = require('./link')
+const static = require('./static')
 const version = require("../package.json").version
 /**
  * in the beginning ,clean cache
  */
 utils.rmdirSync(paths.resolve(pat,'package'))
 
+console.log(static.init)
 program
   .version(version)
 

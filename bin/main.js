@@ -3,6 +3,7 @@ const pro = require('./progress')
 const paths = require('path')
 const utils = require('./utils')
 const g = require('./global')
+let binOt = ""
 const pat = paths.resolve(__dirname, '../cache')
 let s =async function (list,ot) {
   list = parseInput(list)
@@ -21,7 +22,9 @@ let s =async function (list,ot) {
   /**
    * mv cache to work package
    */
-  await userBin(bin,list,fnRex)
+  if(bin){
+    await userBin(bin,list,fnRex)
+  }
   let nfmList = getFileMessageList(paths.resolve(pat,'package/root'))
   pro(4)
   mv(nfmList,pat,cwd)
@@ -30,6 +33,7 @@ let s =async function (list,ot) {
    * clear cache
    */
   utils.rmdirSync(paths.resolve(pat,'package'),function(e){})
+  process.stdout.write(binOt)
   console.log(ot.end)
 }
 
@@ -106,8 +110,8 @@ async function userBin(bin,list,fnRex){
     cwd:paths.resolve(pat,'package/bin')
   }
   var output  = await utils.toExec(bin,options)
-  output = output.replace(/(\n|\r\n|r)$/,"")
-  console.log(output)
+  binOt = output.replace(/(\n|\r\n|r)$/,"")
+  
 }
 
 function parseInput(list){
