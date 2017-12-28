@@ -101,7 +101,13 @@ function checkFileNameAndDirectoryName(fmList,list) {
 function mv(fmList,pat,cwd) {
   fmList.forEach((item)=>{
     if(!/__\w+__/.test(item.fileName)){
-      fse.moveSync(item.absolute,paths.resolve(cwd,item.fileName),{overwrite:true})
+      if(item.isFile){
+        fse.ensureDirSync(cwd)
+        fse.moveSync(item.absolute,paths.resolve(cwd,item.fileName),{overwrite:true})
+      }else{
+        fse.ensureDirSync(paths.resolve(cwd,item.fileName))
+        mv(getFileMessageList(item.absolute),null,paths.resolve(cwd,item.fileName))
+      }
     }
   })
 }
