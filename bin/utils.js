@@ -1,20 +1,19 @@
 const fs = require('fs')
 const fse = require('fs-extra')
 const q = require('q');
-var exec = require('child_process').exec;
+var spawn = require('child_process').spawn;
 const paths = require('path')
+const which = require('which')
 function parseJson(str) {
   return eval('(' +str + ')')
 }
-let copyIndex = 0
+
 function toExec(cmdStr,options){
+  let [first, ...rest] = cmdStr.split(/\s/)
   var deferred  = q.defer()
-  exec(cmdStr,options, function(err,stdout,stderr){
-    if(err) {
-      deferred.reject(stderr)
-    } else {
-      deferred.resolve(stdout)
-    }
+  var runner = spawn(which.sync(first),rest,options);
+  runner.on('close', function () {
+    deferred.resolve()
   });
   return deferred.promise;
 }
