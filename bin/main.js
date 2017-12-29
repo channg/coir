@@ -116,11 +116,10 @@ async function userBin(bin,list,fnRex){
   let binList = getFileMessageList(paths.resolve(pat,'package/bin'))
   checkFile(binList,list,fnRex)
   let options = {
+    stdio: "inherit",
     cwd:paths.resolve(pat,'package/bin')
   }
-  var output  = await utils.toExec(bin,options)
-  binOt = output.replace(/(\n|\r\n|r)$/,"")
-  
+  await utils.toExec(bin,options)
 }
 
 function parseInput(list){
