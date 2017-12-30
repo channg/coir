@@ -42,4 +42,4 @@ program
     link()
   })
 
-program.parse(process.argv);
+program.parse(process.argv)
