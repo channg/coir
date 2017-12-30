@@ -119,7 +119,14 @@ async function userBin(bin,list,fnRex){
     stdio: "inherit",
     cwd:paths.resolve(pat,'package/bin')
   }
-  await utils.toExec(bin,options)
+  if(bin instanceof Array){
+    for(let i =0;i<bin.length;i++){
+      await utils.toExec(bin[i],options)
+    }
+  }else{
+    await utils.toExec(bin,options)
+  }
+
 }
 
 function parseInput(list){
