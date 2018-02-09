@@ -126,6 +126,7 @@ n
 ```
 ## fileName
 `fileName`字段是为了防止一些过度的编译。只有当root下文件夹名字与`filename`匹配的时候，才会进行编译。
+类似`"fileName":".*\\.js$|.*\\.html$|.*\\.less$|.*\\.css$|.*\\.hbs$|.*\\.json$"`
 
 ## end
 运行结束时的提示
