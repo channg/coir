@@ -100,7 +100,7 @@ function checkFileNameAndDirectoryName(fmList,list) {
 
 function mv(fmList,pat,cwd) {
   fmList.forEach((item)=>{
-    if(!/__\w+__/.test(item.fileName)){
+    if(!/__([0-9]+)(?:-([0-9]+))?__/.test(item.fileName)){
       if(item.isFile){
         fse.ensureDirSync(cwd)
         fse.moveSync(item.absolute,paths.resolve(cwd,item.fileName),{overwrite:true})
@@ -119,7 +119,14 @@ async function userBin(bin,list,fnRex){
     stdio: "inherit",
     cwd:paths.resolve(pat,'package/bin')
   }
-  await utils.toExec(bin,options)
+  if(bin instanceof Array){
+    for(let i =0;i<bin.length;i++){
+      await utils.toExec(bin[i],options)
+    }
+  }else{
+    await utils.toExec(bin,options)
+  }
+
 }
 
 function parseInput(list){

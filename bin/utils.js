@@ -9,7 +9,11 @@ function parseJson(str) {
 }
 
 function toExec(cmdStr,options){
+
   let [first, ...rest] = cmdStr.split(/\s/)
+  if(first === "npm") {
+    first = process.platform === 'win32'?"npm.cmd":"npm"
+  }
   var deferred  = q.defer()
   var runner = spawn(which.sync(first),rest,options);
   runner.on('close', function () {
