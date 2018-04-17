@@ -6,8 +6,10 @@ const paths = require('path')
 const pat = paths.resolve(__dirname, '../cache')
 const utils = require('./utils')
 let pa = require('./main')
+const fs = require('fs-extra')
 let againStr = ""
 let againList = []
+let optionsY = {}
 function consoleL(log) {
   process.stdout.write(log)
 }
@@ -78,10 +80,27 @@ function getStdIn(chunk){
  * @param json
  * @private
  */
-function _init(json){
+function _init(json,options){
+  optionsY = options
   staticArray = json
-  tips()
-  stdin()
+  if(options.conf){
+    fs.readJson('./coir_config.json')
+      .then(config => {
+        if(options.conf===true){
+          pa(config.coir,staticArray)
+        }else{
+          pa(config[options.conf],staticArray)
+        }
+      })
+      .catch(err => {
+        tips()
+        stdin()
+      })
+  
+  }else{
+    tips()
+    stdin()
+  }
 }
 
 /**

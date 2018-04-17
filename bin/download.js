@@ -24,7 +24,7 @@ module.exports =  function (url,options,name,cachePath) {
     stream.on("end",()=>{
       var bufferStr = fs.readFileSync(pat + "/package/coir.json","utf-8")
       var coirJson = utils.parseJson(utils.replaceN(bufferStr))
-      processJ(coirJson)
+      processJ(coirJson,options)
     })
   }else{
     pro(1)
@@ -36,7 +36,7 @@ module.exports =  function (url,options,name,cachePath) {
       stream.on("end",()=>{
         var bufferStr = fs.readFileSync(pat + "/package/coir.json","utf-8")
         var coirJson = utils.parseJson(utils.replaceN(bufferStr))
-        processJ(coirJson)
+        processJ(coirJson,options)
       })
     })
   }

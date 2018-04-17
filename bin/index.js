@@ -22,8 +22,13 @@ program
   .alias('i')
   .description('init the coir package')
   .option("-s, --save", "save the package to cache")
+  .option("-c, --conf [value]", "read the coir_config.json ")
   .action((dir,options) => {
-    init(dir,{cache:options.save?true:false})
+    let conf = false
+    if(options.conf){
+      conf = options.conf
+    }
+    init(dir,{cache:options.save?true:false,conf:conf})
   })
 
 program
