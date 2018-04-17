@@ -23,7 +23,7 @@ program
   .description('init the coir package')
   .option("-s, --save", "save the package to cache")
   .action((dir,options) => {
-    init(dir,{cache:options.cache?true:false})
+    init(dir,{cache:options.save?true:false})
   })
 
 program
