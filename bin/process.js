@@ -83,7 +83,7 @@ function getStdIn(chunk){
 function _init(json,options){
   optionsY = options
   staticArray = json
-  if(options.conf){
+  if(options&&options.conf){
     fs.readJson('./coir_config.json')
       .then(config => {
         if(options.conf===true){
