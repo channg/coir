@@ -23,7 +23,7 @@ module.exports = function (name,options) {
   else{
     var coirName = `coir-${name}`
     pro(0)
-    exec(`npm view ${coirName}`,function (error, stdout, stderr) {
+    exec(`npm view ${coirName} dist.tarball`,function (error, stdout, stderr) {
       if(error){
         console.log(error.message.red)
         return
@@ -32,8 +32,8 @@ module.exports = function (name,options) {
         console.log(stderr.red)
         return;
       }
-      var stdoutJson = eval('(' +replaceN(stdout) + ')')
-      donlows(stdoutJson.dist.tarball,options,name)
+      var tarball = stdout
+      donlows(tarball,options,name)
     })
   }
 }
