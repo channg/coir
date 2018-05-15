@@ -23,13 +23,13 @@ let s =async function (list,ot) {
   /**
    * mv cache to work package
    */
-  if(bin){
-    await userBin(bin,list,fnRex)
-  }
   let nfmList = getFileMessageList(paths.resolve(pat,'package/root'))
   pro(4)
   mv(nfmList,pat,cwd)
   pro(5)
+  if(bin){
+    await userBin(bin,list,fnRex)
+  }
   /**
    * clear cache
    */
