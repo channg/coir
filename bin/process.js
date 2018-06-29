@@ -3,13 +3,15 @@ const ansiEscapes = require('ansi-escapes')
 var checkArray = []
 var canReWrite = false
 const paths = require('path')
-const pat = paths.resolve(__dirname, '../cache')
+let pat = paths.resolve(__dirname, '../cache')
+const config = require("./config")
 const utils = require('./utils')
 let pa = require('./main')
 const fs = require('fs-extra')
 let againStr = ""
 let againList = []
 let optionsY = {}
+
 function consoleL(log) {
   process.stdout.write(log)
 }
@@ -113,6 +115,9 @@ function doneInPut() {
 
 function doneInPutAndBreak() {
   process.stdin.emit('end')
+  if(config.cache_path){
+    pat = config.cache_path
+  }
   utils.rmdirSync(paths.resolve(pat,'package'))
 }
 

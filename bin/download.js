@@ -7,8 +7,14 @@ const download = require('download')
 const processJ = require('./process')
 let Duplex = require('stream').Duplex
 let pat = path.resolve(__dirname, '../cache')
+const config = require("./config")
+
+
 let gcache = path.resolve(__dirname, '../gcache')
 module.exports =  function (url,options,name,cachePath) {
+  if(config.cache_path){
+    pat = config.cache_path
+  }
   if(options.cache){
     pro(7)
     download(url).then(data => {

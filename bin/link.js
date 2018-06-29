@@ -4,8 +4,12 @@ const fs = require('fs')
 const fse = require('fs-extra')
 const processJ = require('./process')
 let pat = path.resolve(__dirname, '../cache')
+const config = require("./config")
 const pro = require('./progress')
 module.exports = () => {
+  if(config.cache_path){
+    pat = config.cache_path
+  }
   fs.mkdirSync(path.resolve(pat, 'package'));
   fse.copy( process.cwd(), path.resolve(pat, 'package'))
     .then(() =>{

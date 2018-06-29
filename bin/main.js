@@ -5,8 +5,12 @@ const paths = require('path')
 const utils = require('./utils')
 const g = require('./global')
 let binOt = ""
-const pat = paths.resolve(__dirname, '../cache')
+let pat = paths.resolve(__dirname, '../cache')
+const config = require("./config")
 let s =async function (list,ot) {
+  if(config.cache_path){
+    pat = config.cache_path
+  }
   list = parseInput(list)
   const cwd = process.cwd()
   let fnRex = ot.fileName

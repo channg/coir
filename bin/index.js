@@ -8,6 +8,7 @@ const clean = require('./clean')
 const link = require('./link')
 const static = require('./static')
 const version = require("../package.json").version
+const config = require("./config")
 /**
  * in the beginning ,clean cache
  */
@@ -23,10 +24,15 @@ program
   .description('init the coir package')
   .option("-s, --save", "save the package to cache")
   .option("-c, --conf [value]", "read the coir_config.json ")
+  .option("-a, --cache [value]", "cache path ")
   .action((dir,options) => {
     let conf = false
     if(options.conf){
       conf = options.conf
+    }
+    if(options.cache){
+      utils.rmdirSync(paths.resolve(options.cache,'package'))
+      config.cache_path = options.cache
     }
     init(dir,{cache:options.save?true:false,conf:conf})
   })
