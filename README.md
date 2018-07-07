@@ -7,7 +7,7 @@
     Coir :   Scaffold 's scaffold.
 </p>
 <p align="center">
-  <a href="https://travis-ci.org/channg/coir"><img alt="Travis Status" src="https://img.shields.io/travis/QingWei-Li/docsify/master.svg?style=flat-square"></a>
+  <a href="https://travis-ci.org/channg/coir"><img alt="Travis Status" src="https://img.shields.io/travis/channg/coir/master.svg?style=flat-square"></a>
   <a href="https://www.npmjs.com/package/coir"><img alt="npm" src="https://img.shields.io/npm/v/coir.svg?style=flat-square"></a>
   <a href="https://github.com/channg/coir/blob/master/LICENSE"><img alt="license" src="https://img.shields.io/cocoapods/l/AFNetworking.svg"></a>
 </p>
