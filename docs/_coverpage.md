@@ -1,6 +1,6 @@
 ![logo](img/logo.svg)
 
-# coir 1.0.0
+# coir
 
 >   Coir :   Scaffold 's scaffold.
 
