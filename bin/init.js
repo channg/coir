@@ -1,7 +1,7 @@
 require('colors')
 var replaceN = require('./utils').replaceN
 const path = require('path')
-let gcache = path.resolve(__dirname, '../gcache')
+let gcache = require('./config').gchace_path
 const exec = require('child_process').exec
 const utils = require('./utils')
 const pro = require('./progress')

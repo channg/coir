@@ -31,7 +31,9 @@ function rmdirSync(path){
   fse.removeSync(path)
 }
 
-
+function ensureDirSync(path){
+  fse.ensureDirSync(path)
+}
 
 function getFileMessageList(path){
   let mList = []
@@ -60,5 +62,6 @@ module.exports = {
   rmdirSync:rmdirSync,
   toExec:toExec,
   getFileMessageList:getFileMessageList,
-  copyDir:copyDir
+  copyDir:copyDir,
+  ensureDirSync:ensureDirSync
 }

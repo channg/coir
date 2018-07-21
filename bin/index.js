@@ -12,8 +12,9 @@ const config = require("./config")
 /**
  * in the beginning ,clean cache
  */
-utils.rmdirSync(paths.resolve(pat,'package'))
-
+utils.rmdirSync(paths.resolve(pat, 'package'))
+utils.ensureDirSync(config.cache_path)
+utils.ensureDirSync(config.gchace_path)
 console.log(static.init)
 program
   .version(version)
@@ -24,13 +25,14 @@ program
   .description('init the coir package')
   .option("-s, --save", "save the package to cache")
   .option("-c, --conf [value]", "read the coir_config.json ")
-  .option("-a, --cache [value]", "cache path ")
+  .option("-a, --cache [value]", "deploy cache path")
   .action((dir,options) => {
     let conf = false
     if(options.conf){
       conf = options.conf
     }
     if(options.cache){
+      utils.ensureDirSync(config.cache_path)
       utils.rmdirSync(paths.resolve(options.cache,'package'))
       config.cache_path = options.cache
     }
@@ -41,7 +43,7 @@ program
   .command('clean')
   .alias('c')
   .description('clean the cache')
-  .action(()=>{
+  .action(()=> {
     clean()
   })
 
@@ -49,7 +51,7 @@ program
   .command('link')
   .alias('l')
   .description('link the coir package')
-  .action(()=>{
+  .action(()=> {
     link()
   })
 

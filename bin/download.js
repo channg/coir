@@ -8,9 +8,8 @@ const processJ = require('./process')
 let Duplex = require('stream').Duplex
 let pat = path.resolve(__dirname, '../cache')
 const config = require("./config")
+let gcache = require('./config').gchace_path
 
-
-let gcache = path.resolve(__dirname, '../gcache')
 module.exports =  function (url,options,name,cachePath) {
   if(config.cache_path){
     pat = config.cache_path
