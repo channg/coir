@@ -16,36 +16,37 @@ function consoleL(log) {
   process.stdout.write(log)
 }
 
-function stdin(){
+function stdin() {
   process.stdin.setEncoding('utf8')
   process.stdin.on('readable', () => {
     var chunk = process.stdin.read()
-    if(typeof chunk === 'string'){
-      chunk = chunk.replace(/\r|\n|\r\n|\n\r/g,"")
+    if (typeof chunk === 'string') {
+      chunk = chunk.replace(/\r|\n|\r\n|\n\r/g, "")
       getStdIn(chunk)
     }
   });
 }
 
-function getStdIn(chunk){
-  if(chunk===""){
+function getStdIn(chunk) {
+  if (chunk === "") {
     chunk = staticArray.check[checkArray.length].default
   }
   let {ot,jump} = checkChunk(chunk)
-  if(ot === '__reenter__'){
-    if(canReWrite){
-      process.stdout.write(ansiEscapes.cursorUp()+ansiEscapes.eraseDown+">>".red+"fail enter,please enter again !")
+  if (ot === '__reenter__') {
+    if (canReWrite) {
+      let overLine = getLineOf(false,chunk)
+      process.stdout.write(ansiEscapes.cursorUp(overLine+1) + ansiEscapes.eraseDown + ">>".red + "fail enter,please enter again !")
     }
-    else{
+    else {
       canReWrite = true
-      process.stdout.write(">>".red+" fail enter,please enter again !")
+      process.stdout.write(">>".red + " fail enter,please enter again !")
     }
   }
-  else if (ot.indexOf('__again__')===0){
+  else if (ot.indexOf('__again__') === 0) {
     let bs
-    ot = ot.replace('__again__',"")
+    ot = ot.replace('__again__', "")
     let eachStr = staticArray.check[checkArray.length].each
-    if(eachStr){
+    if (eachStr) {
       bs = eachStr.replace(/__input__/, () => {
         return ot
       })
@@ -56,24 +57,24 @@ function getStdIn(chunk){
     canReWrite = false
     tips()
   }
-  else if (ot === '__exit__'){
+  else if (ot === '__exit__') {
     doneInPutAndBreak()
   }
-  else{
-    
-    if(ot === '__next__'){
+  else {
+
+    if (ot === '__next__') {
       againList = []
       cleanCmd()
       checkArray.push(againStr)
-    }else{
+    } else {
       cleanCmd(chunk)
       checkArray.push(ot)
     }
     canReWrite = false
-    if(jump){
+    if (jump) {
       jumpTo(jump)
     }
-    checkIsDone()?tips():doneInPut()
+    checkIsDone() ? tips() : doneInPut()
   }
 }
 
@@ -82,24 +83,24 @@ function getStdIn(chunk){
  * @param json
  * @private
  */
-function _init(json,options){
+function _init(json, options) {
   optionsY = options
   staticArray = json
-  if(options&&options.conf){
+  if (options && options.conf) {
     fs.readJson('./coir_config.json')
       .then(config => {
-        if(options.conf===true){
-          pa(config.coir,staticArray)
-        }else{
-          pa(config[options.conf],staticArray)
+        if (options.conf === true) {
+          pa(config.coir, staticArray)
+        } else {
+          pa(config[options.conf], staticArray)
         }
       })
       .catch(err => {
         tips()
         stdin()
       })
-  
-  }else{
+
+  } else {
     tips()
     stdin()
   }
@@ -110,36 +111,38 @@ function _init(json,options){
  */
 function doneInPut() {
   process.stdin.emit('end')
-  pa(checkArray,staticArray)
+  pa(checkArray, staticArray)
 }
 
 function doneInPutAndBreak() {
   process.stdin.emit('end')
-  if(config.cache_path){
+  if (config.cache_path) {
     pat = config.cache_path
   }
-  utils.rmdirSync(paths.resolve(pat,'package'))
+  utils.rmdirSync(paths.resolve(pat, 'package'))
 }
 
 
 function cleanCmd(out) {
-  let count = getRexCount("\n",staticArray.check[checkArray.length].tip)
-  if(!out){
-    process.stdout.write(ansiEscapes.cursorUp(count+1)+ansiEscapes.eraseDown)
-  }else{
-    if(canReWrite){
-      if (againList.length>1){
-        process.stdout.write(ansiEscapes.cursorUp(count+3)+ansiEscapes.eraseDown)
-      }else{
-        process.stdout.write(ansiEscapes.cursorUp(count+2)+ansiEscapes.eraseDown)
+  let overLine = getLineOf(true,out)
+  let count = getRexCount("\n", staticArray.check[checkArray.length].tip)
+  count += overLine
+  if (!out) {
+    process.stdout.write(ansiEscapes.cursorUp(count + 1) + ansiEscapes.eraseDown)
+  } else {
+    if (canReWrite) {
+      if (againList.length > 1) {
+        process.stdout.write(ansiEscapes.cursorUp(count + 3) + ansiEscapes.eraseDown)
+      } else {
+        process.stdout.write(ansiEscapes.cursorUp(count + 2) + ansiEscapes.eraseDown)
       }
       tips()
       process.stdout.write(`(${out})\n`)
-    }else{
-      if (againList.length>1){
-        process.stdout.write(ansiEscapes.cursorUp(count+2)+ansiEscapes.eraseDown)
-      }else{
-        process.stdout.write(ansiEscapes.cursorUp(count+ 1)+ansiEscapes.eraseDown)
+    } else {
+      if (againList.length > 1) {
+        process.stdout.write(ansiEscapes.cursorUp(count + 2) + ansiEscapes.eraseDown)
+      } else {
+        process.stdout.write(ansiEscapes.cursorUp(count + 1) + ansiEscapes.eraseDown)
       }
       tips()
       process.stdout.write(`(${out})\n`)
@@ -155,37 +158,55 @@ function checkChunk(chunk) {
   var ot
   var jump
   var list = staticArray.check[checkArray.length].input
-  for(let i = 0;i<list.length;i++){
-    if(new RegExp(list[i].test).test(chunk)){
-      if(!isCheck){
-        ot = returnInput(chunk,list[i].output)
+  for (let i = 0; i < list.length; i++) {
+    if (new RegExp(list[i].test).test(chunk)) {
+      if (!isCheck) {
+        ot = returnInput(chunk, list[i].output)
         jump = list[i].jump
-        isCheck= true
+        isCheck = true
       }
     }
   }
-  if(ot!==undefined){
-    return {ot:ot,jump:jump}
-  }else{
-    return {ot:"__reenter__",jump:jump}
+  if (ot !== undefined) {
+    return {ot: ot, jump: jump}
+  } else {
+    return {ot: "__reenter__", jump: jump}
   }
 }
 
 function checkIsDone() {
-  if(checkArray.length>=staticArray.check.length){
+  if (checkArray.length >= staticArray.check.length) {
     return false
-  }else{
+  } else {
     return true
   }
 }
 
 function tips() {
   let c
-  if(c = staticArray.check[checkArray.length].color){
+  if (c = staticArray.check[checkArray.length].color) {
     consoleL("?  ".red + staticArray.check[checkArray.length].tip[c])
-  }else{
+  } else {
     consoleL("?  ".red + staticArray.check[checkArray.length].tip)
   }
+}
+
+
+function getLineOf(canOut,out) {
+  let tipL = 0
+  if ( canOut ){
+    let tipStr = "?  "+staticArray.check[checkArray.length].tip
+    tipL = tipStr.length
+  } else {
+    let tipStr = ">> fail enter,please enter again !"
+    tipL = tipStr.length
+  }
+  if(out&&out.length){
+    tipL += out.length
+  }
+  var columns = process.stdout.columns
+
+  return ~~(tipL/columns)
 }
 
 /**
@@ -194,48 +215,48 @@ function tips() {
  * @param output
  * @returns {*}
  */
-function returnInput(chunk,output) {
-  if(output==='__exit__'){
+function returnInput(chunk, output) {
+  if (output === '__exit__') {
     return '__exit__';
   }
-  if(output instanceof Array){
+  if (output instanceof Array) {
     let nOutput = []
-    output.forEach((item)=>{
-      let it = checkOt(item,chunk)
+    output.forEach((item)=> {
+      let it = checkOt(item, chunk)
       nOutput.push(it)
     })
     return nOutput
   }
-  var ot = checkOt(output,chunk)
+  var ot = checkOt(output, chunk)
   return `${ot}`
 }
 
-function checkOt(ot,chunk) {
-  let it = ot.replace(/__input__/,function () {
+function checkOt(ot, chunk) {
+  let it = ot.replace(/__input__/, function () {
     return chunk
   })
-  if(it==='__again__'){
+  if (it === '__again__') {
     return `__again__${chunk}`
   }
   return it
 }
 
-function jumpTo(num){
+function jumpTo(num) {
   let step = num
-  if(step>0){
-    for(;step--;step<=0){
+  if (step > 0) {
+    for (; step--; step <= 0) {
       checkArray.push("")
     }
-  }else{
-    for(;step++;step>=0){
+  } else {
+    for (; step++; step >= 0) {
       checkArray.pop()
     }
   }
 }
 
-function getRexCount(rex,str){
+function getRexCount(rex, str) {
   let count = 0
-  str.replace(new RegExp(rex,"g"),(match)=>{
+  str.replace(new RegExp(rex, "g"), (match)=> {
     count++
     return match
   })
