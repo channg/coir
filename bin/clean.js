@@ -1,7 +1,8 @@
 const utils = require("./utils")
 const progress = require("./progress")
+const config = require("./config.js")
 const path = require('path')
-let gcache = path.resolve(__dirname, '../gcache')
+let gcache = config.gchace_path
 module.exports = function () {
   let cacheList = utils.getFileMessageList(gcache)
   cacheList.forEach(item => {
