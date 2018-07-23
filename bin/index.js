@@ -43,8 +43,8 @@ program
   .command('clean')
   .alias('c')
   .description('clean the cache')
-  .action(()=> {
-    clean()
+  .action((dir)=> {
+    clean(dir)
   })
 
 program
