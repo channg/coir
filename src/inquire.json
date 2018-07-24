@@ -1,7 +1,43 @@
 {
-  "inquire":[
-    {
-      "question":"你快乐吗?"
+  "inquire": {
+    "1": {
+      "type": "input",
+      "question": "are you happy",
+      "default": "happy",
+      "output": {
+        "test": ".*",
+        "value": "__this__"
+      }
+    },
+    "2": {
+      "type": "input",
+      "question": "are you happy2",
+      "default": "happy",
+      "output": [
+        {
+          "test": "^[a|A]$",
+          "value": "__this__"
+        },
+        {
+          "test": "^[b|B]$",
+          "value": "__this__"
+        }
+      ]
+    },
+    "3": {
+      "type": "input",
+      "question": "are you happy3",
+      "default": "happy",
+      "output": [
+        {
+          "test": "^[a|A]$",
+          "value": "__this__"
+        },
+        {
+          "test": "^[b|B]$",
+          "value": "__this__"
+        }
+      ]
     }
-  ]
+  }
 }

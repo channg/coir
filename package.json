@@ -4,7 +4,8 @@
   "description": "this project to init some folder,help you create new folder.",
   "main": "bin/index.js",
   "scripts": {
-    "test": "node bin/index --version"
+    "test": "node bin/index --version",
+    "inquire":"node src/process"
   },
   "repository": {
     "type": "git",
