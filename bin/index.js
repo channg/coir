@@ -12,7 +12,7 @@ const config = require("./config")
 /**
  * in the beginning ,clean cache
  */
-utils.rmdirSync(paths.resolve(pat, 'package'))
+utils.rmdirSync(config.cache_path)
 utils.ensureDirSync(config.cache_path)
 utils.ensureDirSync(config.gchace_path)
 console.log(static.init)
