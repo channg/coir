@@ -6,7 +6,10 @@
       "default": "happy",
       "output": {
         "test": ".*",
-        "value": "__this__"
+        "value": [
+          "__this____this__",
+          "100"
+        ]
       }
     },
     "2": {
@@ -16,11 +19,11 @@
       "output": [
         {
           "test": "^[a|A]$",
-          "value": "__this__"
+          "value": "0"
         },
         {
           "test": "^[b|B]$",
-          "value": "__this__"
+          "value": "1"
         }
       ]
     },
@@ -31,11 +34,43 @@
       "output": [
         {
           "test": "^[a|A]$",
-          "value": "__this__"
+          "value": "0"
         },
         {
           "test": "^[b|B]$",
-          "value": "__this__"
+          "value": "1"
+        }
+      ]
+    },
+    "100": {
+      "type": "confirm",
+      "question": "are you happy confirm",
+      "default": false,
+      "output": [
+        {
+          "test": "true",
+          "value": "100"
+        },
+        {
+          "test": "false",
+          "value": "1123123"
+        }
+      ]
+    },
+    "200": {
+      "type": "list",
+      "question": "are you happy list",
+      "default": false,
+      "output": [
+        {
+
+          "jump":"100",
+          "test": "aaa",
+          "value": "1000000"
+        },
+        {
+          "test": "3000",
+          "value": "jdfkjkljksd"
         }
       ]
     }

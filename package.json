@@ -5,7 +5,7 @@
   "main": "bin/index.js",
   "scripts": {
     "test": "node bin/index --version",
-    "inquire":"node src/process"
+    "inquire": "node src/process"
   },
   "repository": {
     "type": "git",

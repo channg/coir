@@ -17,6 +17,16 @@ let questionIndex = null
  * @type {null}
  */
 let keyG = null
+/**
+ * if output is a array ,this is a number of the index of pass test
+ * @type {null}
+ */
+let currentTest = null
+
+
+let G_TYPE = null
+
+let END_DATA = {}
 
 let coirjson = null
 let qKeyArray = null
@@ -24,15 +34,7 @@ let qKeyArray = null
 function q(j) {
   coirjson = j
   qKeyArray = initQuestions(j)
-  shwoInquire()
-  /*  console.log(question)
-    inquirer
-      .prompt(
-        question
-      )
-      .then(answers => {
-        console.log(answers)
-      });*/
+  showInquire()
 }
 
 
@@ -50,7 +52,17 @@ function initQuestions(coirjson) {
     for (let item in coirjson.inquire) {
       qKeyArray.push(item)
     }
-    qKeyArray.sort()
+    qKeyArray = qKeyArray.sort((a, b) => {
+      a = parseInt(a)
+      b = parseInt(b)
+      if (a < b) {
+        return -1;
+      }
+      if (a > b) {
+        return 1;
+      }
+      return 0;
+    })
     return qKeyArray
   }
 }
@@ -65,28 +77,32 @@ function initQuestions(coirjson) {
 function getNextQuestions(qKeyArray, coirjson, index, jump) {
   let questions = []
   
-  if (index===null) {
+  if (index === null) {
     index = 0
   } else {
     index++
   }
-  
-  questionIndex = index
   if (jump) {
     index = qKeyArray.indexOf(jump)
   }
+  questionIndex = index
   let key = qKeyArray[index]
   /**
    * next inquire not alive
    */
-  if(!key){
+  if (!key) {
     return questions
   }
   keyG = key
   let item = coirjson[key]
   let type = item.type || 'input'
+  G_TYPE = type
   if (type === 'input') {
     questions.push(typeInput(item, key))
+  } else if (type === 'confirm') {
+    questions.push(typeConfirm(item, key))
+  } else if (type === 'list') {
+    questions.push(typeList(item, key))
   }
   return questions
 }
@@ -102,20 +118,28 @@ function typeInput(item, key) {
   question.message = item.question
   question.default = item.default
   question.validate = function (value) {
-    let check = 'try again'
-    if (item.output.length) {
+    let check = 'Failed validation, please re-enter.'
+    if (Array.isArray(item.output)) {
+      let over = 0
       item.output.forEach((i) => {
-        if (check!==true) {
+        if (check !== true) {
           check = new RegExp(i.test).test(value)
-          if(check===false){
+          if (check === false) {
             check = 'Failed validation, please re-enter.'
+          } else {
+            setJump(i.jump)
+            currentTest = over
           }
+          over++
         }
       })
     } else {
+      currentTest = null
       check = new RegExp(item.output.test).test(value)
-      if(check===false){
+      if (check === false) {
         check = 'Failed validation, please re-enter.'
+      } else {
+        setJump(item.output.jump)
       }
     }
     return check
@@ -124,12 +148,48 @@ function typeInput(item, key) {
 }
 
 
-function shwoInquire() {
+function typeConfirm(item, key) {
+  let question = {}
+  question.name = config.prefix + key
+  question.type = item.type
+  question.message = item.question
+  question.default = item.default
+  return question
+}
+
+function typeList(item, key) {
+  let question = {}
+  question.name = config.prefix + key
+  question.type = item.type
+  question.message = item.question
+  question.default = item.default
+  question.choices = item.output.map((item) => {
+    return item.test
+  })
+  return question
+}
+
+
+function setJump(curjump) {
+  if (curjump) {
+    jump = curjump
+  } else {
+    jump = null
+  }
+}
+
+/**
+ * show Inquire
+ */
+function showInquire() {
   let qs = getNextQuestions(qKeyArray, coirjson.inquire, questionIndex, jump)
   if (qs.length > 0) {
-    point(qs).then((answer)=>{
-      shwoInquire()
+    point(qs).then((answer) => {
+      checkOut({answer, keyG, currentTest})
+      showInquire()
     })
+  }else{
+    console.log(END_DATA)
   }
 }
 
@@ -145,10 +205,73 @@ function point(qs) {
         qs
       )
       .then(answers => {
-        console.log(answers)
         resolve(answers)
       });
   })
+}
+
+/**
+ * Assign the transformed data to END_DATA
+ * @param answer
+ * @param keyG
+ * @param currentTest
+ */
+function checkOut({answer, keyG, currentTest}) {
+  currentTest = getCurrentTest(currentTest, answer)
+  console.log(currentTest)
+  let data = answer[config.prefix + keyG]
+  let output
+  if (currentTest === null) {
+    output = coirjson.inquire[keyG].output.value
+  } else {
+    output = coirjson.inquire[keyG].output[currentTest].value
+  }
+  let tr = translateMark(data, output)
+  END_DATA[keyG] = tr
+}
+
+function translateMark(data, output) {
+  let b
+  if (Array.isArray(output)) {
+    b = []
+    output.forEach((item) => {
+      let r = itemT(data, item)
+      b.push(r)
+    })
+  } else {
+    b = itemT(data, output)
+  }
+  return b
+}
+
+function itemT(data, item) {
+  let it = item.replace(/__this__/g, function () {
+    return data
+  })
+  return it
+}
+
+/**
+ * if type like confirm not have the validate
+ * We need to actively validate the fields
+ * @param currentTest
+ * @param answer
+ * @returns {*}
+ */
+function getCurrentTest(currentTest, answer) {
+  if (G_TYPE === 'input') {
+    return currentTest
+  } else if (G_TYPE === 'confirm'|| G_TYPE === 'list') {
+    let over = -1
+    let ot = coirjson.inquire[keyG].output
+    for (let i = 0; i < ot.length; i++) {
+      if (ot[i].test === answer[config.prefix + keyG]||ot[i].test=== answer[config.prefix + keyG].toString()) {
+        setJump(coirjson.inquire[keyG].output[i].jump)
+        over = i
+      }
+    }
+    return over
+  }
 }
 
 
