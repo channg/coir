@@ -45,7 +45,6 @@ program
         commadConfig.cache = options.cache
       }
     }
-    
     init(dir)
   })
 

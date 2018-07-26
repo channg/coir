@@ -1,4 +1,4 @@
-#!/usr/bin/env node --inspect-brk
+#!/usr/bin/env node
 const utils = require('./utils')
 const paths = require('path')
 const pat = paths.resolve(__dirname, '../cache')
@@ -12,10 +12,9 @@ const config = require("./config")
 /**
  * in the beginning ,clean cache
  */
-utils.rmdirSync(paths.resolve(pat, 'package'))
+  utils.rmdirSync(paths.resolve(pat, 'package'))
 utils.ensureDirSync(config.cache_path)
 utils.ensureDirSync(config.gchace_path)
-console.log(static.init)
 program
   .version(version)
 

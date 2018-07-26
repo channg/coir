@@ -13,5 +13,8 @@ module.exports = function (dotName) {
     case 'DOWN_BASE':
       console.log('[ Download  package ]'.gray)
       break
+    case 'BUILD':
+      console.log('[      Building     ]'.gray)
+      break
   }
 }

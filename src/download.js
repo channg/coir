@@ -4,6 +4,7 @@ const fs = require('fs')
 const config = require('./commadConfig')
 const dot = require('./dot')
 const path = require('path')
+const inquire = require('./process')
 let {Duplex} = require('stream')
 const utils = require('./utils')
 module.exports = function ({path, name, tgzPath}) {
@@ -21,8 +22,7 @@ module.exports = function ({path, name, tgzPath}) {
      *  download  and get coir.json if have the path
      */
     getCoirJsonWithDownload(path, config.cache).then((data) => {
-      console.log('not')
-      console.log(data)
+      inquire(data)
     }).catch((err) => {
       utils.error(err.message)
     })
@@ -31,8 +31,7 @@ module.exports = function ({path, name, tgzPath}) {
      * use cache
      */
     getCoirJsonWithCache(tgzPath, config.cache).then((data)=>{
-      console.log('cache')
-      console.log(data)
+      inquire(data)
     }).catch((err) => {
       utils.error(err.message)
     })

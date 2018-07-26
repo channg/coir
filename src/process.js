@@ -1,6 +1,7 @@
 #!/usr/bin/env node --inspect-brk
 const inquirer = require('inquirer')
 const config = require('./commadConfig.js')
+const main = require('./main.js')
 module.exports = q
 /**
  *  jump is a string of the inquire key
@@ -29,7 +30,7 @@ let G_TYPE = null
 let END_DATA = {}
 
 let coirjson = null
-let qKeyArray = null
+let qKeyArray = []
 
 function q(j) {
   coirjson = j
@@ -103,6 +104,8 @@ function getNextQuestions(qKeyArray, coirjson, index, jump) {
     questions.push(typeConfirm(item, key))
   } else if (type === 'list') {
     questions.push(typeList(item, key))
+  } else if (type === 'editor') {
+    questions.push(typeEditor(item, key))
   }
   return questions
 }
@@ -112,6 +115,42 @@ function getNextQuestions(qKeyArray, coirjson, index, jump) {
  * @param item
  */
 function typeInput(item, key) {
+  let question = {}
+  question.name = config.prefix + key
+  question.type = item.type
+  question.message = item.question
+  question.default = item.default
+  question.validate = function (value) {
+    let check = 'Failed validation, please re-enter.'
+    if (Array.isArray(item.output)) {
+      let over = 0
+      item.output.forEach((i) => {
+        if (check !== true) {
+          check = new RegExp(i.test).test(value)
+          if (check === false) {
+            check = 'Failed validation, please re-enter.'
+          } else {
+            setJump(i.jump)
+            currentTest = over
+          }
+          over++
+        }
+      })
+    } else {
+      currentTest = null
+      check = new RegExp(item.output.test).test(value)
+      if (check === false) {
+        check = 'Failed validation, please re-enter.'
+      } else {
+        setJump(item.output.jump)
+      }
+    }
+    return check
+  }
+  return question
+}
+
+function typeEditor(item, key) {
   let question = {}
   question.name = config.prefix + key
   question.type = item.type
@@ -188,8 +227,8 @@ function showInquire() {
       checkOut({answer, keyG, currentTest})
       showInquire()
     })
-  }else{
-    console.log(END_DATA)
+  } else {
+    main(END_DATA, coirjson)
   }
 }
 
@@ -218,7 +257,6 @@ function point(qs) {
  */
 function checkOut({answer, keyG, currentTest}) {
   currentTest = getCurrentTest(currentTest, answer)
-  console.log(currentTest)
   let data = answer[config.prefix + keyG]
   let output
   if (currentTest === null) {
@@ -259,13 +297,13 @@ function itemT(data, item) {
  * @returns {*}
  */
 function getCurrentTest(currentTest, answer) {
-  if (G_TYPE === 'input') {
+  if (G_TYPE === 'input' || G_TYPE === 'editor') {
     return currentTest
-  } else if (G_TYPE === 'confirm'|| G_TYPE === 'list') {
+  } else if (G_TYPE === 'confirm' || G_TYPE === 'list') {
     let over = -1
     let ot = coirjson.inquire[keyG].output
     for (let i = 0; i < ot.length; i++) {
-      if (ot[i].test === answer[config.prefix + keyG]||ot[i].test=== answer[config.prefix + keyG].toString()) {
+      if (ot[i].test === answer[config.prefix + keyG] || ot[i].test === answer[config.prefix + keyG].toString()) {
         setJump(coirjson.inquire[keyG].output[i].jump)
         over = i
       }
@@ -274,6 +312,4 @@ function getCurrentTest(currentTest, answer) {
   }
 }
 
-
-q(require('./inquire.json'))
 
