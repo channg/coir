@@ -4,10 +4,12 @@ const log = require('./log')
 const commadConfig = require('./commadConfig')
 const init = require('./init')
 const utils = require('./utils')
+const clean = require('./clean')
+
+
+
 utils.ensureDirSync(commadConfig.cache)
 utils.ensureDirSync(commadConfig.gcache)
-
-
 /**
  * version from package.json
  */
@@ -51,6 +53,15 @@ program
       }
     }
     init(dir)
+  })
+
+
+program
+  .command('clean')
+  .alias('c')
+  .description('clean the cache')
+  .action(()=> {
+    clean()
   })
 
 

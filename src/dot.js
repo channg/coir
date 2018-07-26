@@ -16,5 +16,8 @@ module.exports = function (dotName) {
     case 'BUILD':
       console.log('[      Building     ]'.gray)
       break
+    case 'CLEAN':
+      console.log('[ Clear      cache  ]'.gray)
+      break
   }
 }
