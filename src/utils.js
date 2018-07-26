@@ -1,28 +1,11 @@
 const fs = require('fs')
 const fse = require('fs-extra')
-const q = require('q');
-var spawn = require('child_process').spawn;
 const paths = require('path')
-const which = require('which')
 require( "colors")
 
 function parseJson(str) {
   return eval('(' +str + ')')
 }
-
-function toExec(cmdStr,options){
-  let [first, ...rest] = cmdStr.split(/\s/)
-  if(first === "npm") {
-    first = process.platform === 'win32'?"npm.cmd":"npm"
-  }
-  var deferred  = q.defer()
-  var runner = spawn(which.sync(first),rest,options);
-  runner.on('close', function () {
-    deferred.resolve()
-  });
-  return deferred.promise;
-}
-
 
 function replaceN(str) {
   return str.replace(/\n\s+/gm,'')
@@ -70,7 +53,6 @@ module.exports = {
   parseJson:parseJson,
   replaceN,replaceN,
   rmdirSync:rmdirSync,
-  toExec:toExec,
   getFileMessageList:getFileMessageList,
   copyDir:copyDir,
   ensureDirSync:ensureDirSync,
