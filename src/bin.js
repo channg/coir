@@ -3,6 +3,11 @@ const program = require('commander')
 const log = require('./log')
 const commadConfig = require('./commadConfig')
 const init = require('./init')
+const utils = require('./utils')
+utils.ensureDirSync(commadConfig.cache)
+utils.ensureDirSync(commadConfig.gcache)
+
+
 /**
  * version from package.json
  */
