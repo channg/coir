@@ -1,6 +1,6 @@
 const utils = require('./utils')
 const {exec} = require('child_process')
-const config = require('./commadConfig')
+const config = require('./commandConfig')
 let dot = require('./dot')
 const download = require('./download')
 

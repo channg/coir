@@ -19,6 +19,11 @@ function ensureDirSync(path){
   fse.ensureDirSync(path)
 }
 
+function readJson(path){
+  return fse.readJsonSync(path)
+}
+
+
 function getFileMessageList(path){
   let mList = []
   let list = fs.readdirSync(path)
@@ -53,6 +58,7 @@ module.exports = {
   parseJson:parseJson,
   replaceN,replaceN,
   rmdirSync:rmdirSync,
+  readJson:readJson,
   getFileMessageList:getFileMessageList,
   copyDir:copyDir,
   ensureDirSync:ensureDirSync,

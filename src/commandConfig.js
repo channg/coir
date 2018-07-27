@@ -9,7 +9,7 @@ var gpath = paths.resolve(os.homedir(), '.gcoircache')
 let config = {
   cache:path,
   gcache:gpath,
-  conf:'coir_config',
+  conf:'',
   save:false,
   useConf:false,
   prefix:'coir'

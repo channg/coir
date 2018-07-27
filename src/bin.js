@@ -1,15 +1,13 @@
 const version = require('../package.json').version
 const program = require('commander')
 const log = require('./log')
-const commadConfig = require('./commadConfig')
+const commandConfig = require('./commandConfig')
 const init = require('./init')
 const utils = require('./utils')
 const clean = require('./clean')
 
-
-
-utils.ensureDirSync(commadConfig.cache)
-utils.ensureDirSync(commadConfig.gcache)
+utils.ensureDirSync(commandConfig.cache)
+utils.ensureDirSync(commandConfig.gcache)
 /**
  * version from package.json
  */
@@ -29,27 +27,38 @@ program
   .action((dir, options) => {
     //if dir is undefined
     if (!dir) {
-      log.NOKEY()
+      log.NO_KEY()
       return
     }
     /**
      * overwrite config
      */
     if (options.save) {
-      commadConfig.save = true
+      commandConfig.save = true
       if (options.save !== true) {
-        commadConfig.gcache = options.save
+        commandConfig.gcache = options.save
       }
     }
     if (options.conf) {
-      commadConfig.useConf = true
-      if (options.conf !== true) {
-        commadConfig.conf = options.conf
+      if (options.conf === true) {
+        log.NO_CONF_VALUE()
+      } else {
+        try {
+          let rc = utils.readJson('./.coirrc')
+          if (rc[options.conf]) {
+            commandConfig.useConf = true
+            commandConfig.conf = options.conf
+          } else {
+            log.NOT_FINT_THIS_VALUE(options.conf)
+          }
+        } catch (err) {
+          log.NOT_FIND_COIRRC()
+        }
       }
     }
     if (options.cache) {
       if (options.cache !== true) {
-        commadConfig.cache = options.cache
+        commandConfig.cache = options.cache
       }
     }
     init(dir)
@@ -60,7 +69,7 @@ program
   .command('clean')
   .alias('c')
   .description('clean the cache')
-  .action(()=> {
+  .action(() => {
     clean()
   })
 

@@ -1,6 +1,6 @@
 #!/usr/bin/env node --inspect-brk
 const inquirer = require('inquirer')
-const config = require('./commadConfig.js')
+const config = require('./commandConfig.js')
 const main = require('./main.js')
 module.exports = q
 /**
@@ -34,8 +34,13 @@ let qKeyArray = []
 
 function q(j) {
   coirjson = j
+  if(config.useConf===true){
+    main(config.conf, coirjson)
+    return
+  }
   qKeyArray = initQuestions(j)
   showInquire()
+  
 }
 
 
