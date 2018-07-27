@@ -1,6 +1,7 @@
-require( "colors")
-module.exports = function (dotName) {
-  switch (dotName){
+require("colors")
+const leftPad = require('left-pad')
+module.exports = function (dotName, val) {
+  switch (dotName) {
     case 'INIT':
       console.log('[ Init      package ]'.gray)
       break
@@ -18,6 +19,17 @@ module.exports = function (dotName) {
       break
     case 'CLEAN':
       console.log('[ Clear      cache  ]'.gray)
+      break
+    case 'USE_RC':
+      let max_length = 0
+      for (let key in val) {
+        if(key.length>max_length){
+          max_length = key.length
+        }
+      }
+      for (let key in val) {
+        console.log(""+leftPad(key + "",max_length-key.length+1).green + ': ' + (val[key] + "").gray)
+      }
       break
   }
 }

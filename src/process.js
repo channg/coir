@@ -2,6 +2,7 @@
 const inquirer = require('inquirer')
 const config = require('./commandConfig.js')
 const main = require('./main.js')
+const dot = require('./dot.js')
 module.exports = q
 /**
  *  jump is a string of the inquire key
@@ -35,6 +36,7 @@ let qKeyArray = []
 function q(j) {
   coirjson = j
   if(config.useConf===true){
+    dot('USE_RC',config.conf)
     main(config.conf, coirjson)
     return
   }

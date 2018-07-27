@@ -47,7 +47,7 @@ program
           let rc = utils.readJson('./.coirrc')
           if (rc[options.conf]) {
             commandConfig.useConf = true
-            commandConfig.conf = options.conf
+            commandConfig.conf = rc[options.conf]
           } else {
             log.NOT_FINT_THIS_VALUE(options.conf)
           }

@@ -7,7 +7,6 @@ const dot = require('./dot')
 module.exports = main
 
 function main(map, json) {
-  console.log(map)
   const cwd = process.cwd()
   const fnRex = json.fileName
   const fmList = utils.getFileMessageList(path.resolve(config.cache, 'package/root'))
