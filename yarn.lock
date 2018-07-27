@@ -428,7 +428,7 @@ jsonfile@^4.0.0:
 
 left-pad@^1.3.0:
   version "1.3.0"
-  resolved "http://npm.pandatv.com/left-pad/-/left-pad-1.3.0.tgz#5b8a3a7765dfe001261dde915589e782f8c94d1e"
+  resolved "https://registry.yarnpkg.com/left-pad/-/left-pad-1.3.0.tgz#5b8a3a7765dfe001261dde915589e782f8c94d1e"
 
 lodash@^4.3.0:
   version "4.17.10"
