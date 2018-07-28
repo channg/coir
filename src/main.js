@@ -114,9 +114,7 @@ function saveConfig(map){
   }
 
   if(j){
-    console.log(j)
     j[config.saveConfValue] = map
-    console.log(j)
     utils.outputJsonSync('./.coirrc',j)
   }else{
     utils.outputJsonSync('./.coirrc',{[config.saveConfVlue]:map})

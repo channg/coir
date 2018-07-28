@@ -28,7 +28,7 @@ module.exports = function (dotName, val) {
         }
       }
       for (let key in val) {
-        console.log(""+leftPad(key + "",max_length-key.length+1).green + ': ' + (val[key] + "").gray)
+        console.log(""+leftPad(key + "",max_length-key.length+1).green + ': ' + (JSON.stringify(val[key])).gray)
       }
       break
   }
