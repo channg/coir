@@ -7,6 +7,7 @@ const dot = require('./dot')
 module.exports = main
 
 function main(map, json) {
+  saveConfig(map)
   const cwd = process.cwd()
   const fnRex = json.fileName
   const fmList = utils.getFileMessageList(path.resolve(config.cache, 'package/root'))
@@ -98,4 +99,24 @@ function mv(fmList,cwd) {
       }
     }
   })
+}
+
+function saveConfig(map){
+  if(!config.saveConf)
+    return
+
+  let j = {}
+  try{
+    let j = utils.readJson('./.coirrc')
+  }catch (err){
+
+  }
+
+  if(j){
+    j[config.saveConfValue] = map
+    utils.outputJsonSync('./.coirrc',j)
+  }else{
+    utils.outputJsonSync('./.coirrc',{[config.saveConfVlue]:map})
+  }
+
 }

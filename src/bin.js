@@ -24,6 +24,7 @@ program
   .option("-s, --save [value]", "save the package to cache")
   .option("-c, --conf [value]", "read the coir_config.json ")
   .option("-a, --cache [value]", "edit deploy cache path")
+  .option("-r, --saveRc [value]", "save the value to .coirrc")
   .action((dir, options) => {
     //if dir is undefined
     if (!dir) {
@@ -54,6 +55,15 @@ program
         } catch (err) {
           log.NOT_FIND_COIRRC()
         }
+      }
+    }
+    if (options.saveRc) {
+      if (options.saveRc === true) {
+        log.NO_SAVE_CONF_VALUE()
+      } else {
+        utils.ensureFileSync('./.coirrc')
+        commandConfig.saveConf = true
+        commandConfig.saveConfValue = options.saveRc
       }
     }
     if (options.cache) {

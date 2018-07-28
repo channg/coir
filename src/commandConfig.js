@@ -12,6 +12,8 @@ let config = {
   conf:'',
   save:false,
   useConf:false,
-  prefix:'coir'
+  prefix:'coir',
+  saveConf:false,
+  saveConfValue:''
 }
 module.exports = config

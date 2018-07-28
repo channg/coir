@@ -15,5 +15,8 @@ module.exports = {
   },
   NOT_FINT_THIS_VALUE:function (value) {
     console.log(('error: Not find the this value ['+value+'].').red)
+  },
+  NO_SAVE_CONF_VALUE: function () {
+    console.log('error: The -sc command need a value.'.red)
   }
 }

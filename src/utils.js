@@ -11,6 +11,10 @@ function replaceN(str) {
   return str.replace(/\n\s+/gm,'')
 }
 
+function ensureFileSync(path){
+  fse.ensureFileSync(path)
+}
+
 function rmdirSync(path){
   fse.removeSync(path)
 }
@@ -53,6 +57,9 @@ function error(str){
   console.log(str.red)
 }
 
+function outputJsonSync(path,obj){
+  fse.outputJsonSync(path,obj)
+}
 
 module.exports = {
   parseJson:parseJson,
@@ -62,5 +69,7 @@ module.exports = {
   getFileMessageList:getFileMessageList,
   copyDir:copyDir,
   ensureDirSync:ensureDirSync,
-  error:error
+  error:error,
+  ensureFileSync:ensureFileSync,
+  outputJsonSync:outputJsonSync
 }
