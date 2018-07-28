@@ -107,13 +107,16 @@ function saveConfig(map){
 
   let j = {}
   try{
-    let j = utils.readJson('./.coirrc')
+    j = utils.readJson('./.coirrc')
+
   }catch (err){
 
   }
 
   if(j){
+    console.log(j)
     j[config.saveConfValue] = map
+    console.log(j)
     utils.outputJsonSync('./.coirrc',j)
   }else{
     utils.outputJsonSync('./.coirrc',{[config.saveConfVlue]:map})
