@@ -4,8 +4,7 @@
   "description": "this project to init some folder,help you create new folder.",
   "main": "src/bin.js",
   "scripts": {
-    "test": "node src/bin --version",
-    "inquire": "node src/process"
+    "test": "node bin/bin --version"
   },
   "repository": {
     "type": "git",
@@ -17,7 +16,7 @@
   "author": "xuezhiwen",
   "license": "ISC",
   "bin": {
-    "coir": "./bin/index.js"
+    "coir": "./bin/bin.js"
   },
   "dependencies": {
     "colors": "^1.1.2",

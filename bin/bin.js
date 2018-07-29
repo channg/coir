@@ -1,10 +1,10 @@
 const version = require('../package.json').version
 const program = require('commander')
-const log = require('./log')
-const commandConfig = require('./commandConfig')
-const init = require('./init')
-const utils = require('./utils')
-const clean = require('./clean')
+const log = require('./../src/log')
+const commandConfig = require('./../src/commandConfig')
+const init = require('./../src/init')
+const utils = require('./../src/utils')
+const clean = require('./../src/clean')
 
 utils.ensureDirSync(commandConfig.cache)
 utils.ensureDirSync(commandConfig.gcache)
