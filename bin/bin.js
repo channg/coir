@@ -1,10 +1,12 @@
-const version = require('../package.json').version
+#!/usr/bin/env node
+const version = require('../package.json').version;
 const program = require('commander')
 const log = require('./../src/log')
 const commandConfig = require('./../src/commandConfig')
 const init = require('./../src/init')
 const utils = require('./../src/utils')
 const clean = require('./../src/clean')
+const use = require('./../src/use')
 
 utils.ensureDirSync(commandConfig.cache)
 utils.ensureDirSync(commandConfig.gcache)
@@ -13,6 +15,7 @@ utils.ensureDirSync(commandConfig.gcache)
  */
 program
   .version(version)
+
 
 /**
  * init command
@@ -81,6 +84,18 @@ program
   .description('clean the cache')
   .action(() => {
     clean()
+  })
+
+
+program
+  .command('use [path]')
+  .alias('u')
+  .description('use the local coir.json,default path ./')
+  .action((path) => {
+    if(path){
+      commandConfig.usePath = path
+    }
+    use()
   })
 
 

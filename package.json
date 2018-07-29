@@ -2,9 +2,10 @@
   "name": "coir",
   "version": "2.0.0",
   "description": "this project to init some folder,help you create new folder.",
-  "main": "src/bin.js",
+  "main": "bin/bin.js",
   "scripts": {
-    "test": "node bin/bin --version"
+    "test": "node bin/bin --version",
+    "doc": "cd docs-res && mkdocs serve"
   },
   "repository": {
     "type": "git",
@@ -16,7 +17,7 @@
   "author": "xuezhiwen",
   "license": "ISC",
   "bin": {
-    "coir": "./bin/bin.js"
+    "coir": "bin/bin.js"
   },
   "dependencies": {
     "colors": "^1.1.2",
