@@ -4,18 +4,23 @@ const config = require('./commandConfig')
 const utils = require('./utils')
 const path = require('path')
 const dot = require('./dot')
+const log = require('./log')
 module.exports = main
 
 function main(map, json) {
-  saveConfig(map)
-  const cwd = process.cwd()
-  const fnRex = json.fileName
-  const fmList = utils.getFileMessageList(path.resolve(config.cache, 'package/root'))
-  compile(fmList, map, fnRex)
-  const compileFnList = utils.getFileMessageList(path.resolve(config.cache, 'package/root'))
-  mv(compileFnList,cwd)
-  utils.rmdirSync(path.resolve(config.cache,'package'))
-  dot('BUILD')
+  try {
+    saveConfig(map)
+    const cwd = process.cwd()
+    const fnRex = json.fileName||'.*'
+    const fmList = utils.getFileMessageList(path.resolve(config.cache, 'package/root'))
+    compile(fmList, map, fnRex)
+    const compileFnList = utils.getFileMessageList(path.resolve(config.cache, 'package/root'))
+    mv(compileFnList, cwd)
+    utils.rmdirSync(path.resolve(config.cache, 'package'))
+    dot('BUILD')
+  }catch (err){
+    log.NO_SUCH_DIR()
+  }
 }
 
 /**
@@ -77,47 +82,47 @@ function checkFileNameAndDirectoryName(fmList, list) {
     let rFn = replaceNum(fn, list)
     if (fn !== rFn) {
       if (rFn === "") {
-        utils.rmdirSync(path.resolve(item.path,item.fileName))
+        utils.rmdirSync(path.resolve(item.path, item.fileName))
       } else {
         fse.copySync(path.resolve(item.path, item.fileName), path.resolve(item.path, rFn))
-        utils.rmdirSync(path.resolve(item.path,item.fileName))
+        utils.rmdirSync(path.resolve(item.path, item.fileName))
       }
     }
   })
 }
 
 
-function mv(fmList,cwd) {
-  fmList.forEach((item)=>{
-    if(!/__([0-9]+)(?:-([0-9]+))?__/.test(item.fileName)){
-      if(item.isFile){
+function mv(fmList, cwd) {
+  fmList.forEach((item) => {
+    if (!/__([0-9]+)(?:-([0-9]+))?__/.test(item.fileName)) {
+      if (item.isFile) {
         fse.ensureDirSync(cwd)
-        fse.moveSync(item.absolute,path.resolve(cwd,item.fileName),{overwrite:true})
-      }else{
-        fse.ensureDirSync(path.resolve(cwd,item.fileName))
-        mv(utils.getFileMessageList(item.absolute),path.resolve(cwd,item.fileName))
+        fse.moveSync(item.absolute, path.resolve(cwd, item.fileName), {overwrite: true})
+      } else {
+        fse.ensureDirSync(path.resolve(cwd, item.fileName))
+        mv(utils.getFileMessageList(item.absolute), path.resolve(cwd, item.fileName))
       }
     }
   })
 }
 
-function saveConfig(map){
-  if(!config.saveConf)
+function saveConfig(map) {
+  if (!config.saveConf)
     return
-
+  
   let j = {}
-  try{
+  try {
     j = utils.readJson('./.coirrc')
-
-  }catch (err){
-
+    
+  } catch (err) {
+  
   }
-
-  if(j){
+  
+  if (j) {
     j[config.saveConfValue] = map
-    utils.outputJsonSync('./.coirrc',j)
-  }else{
-    utils.outputJsonSync('./.coirrc',{[config.saveConfVlue]:map})
+    utils.outputJsonSync('./.coirrc', j)
+  } else {
+    utils.outputJsonSync('./.coirrc', {[config.saveConfVlue]: map})
   }
-
+  
 }

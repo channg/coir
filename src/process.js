@@ -3,6 +3,7 @@ const inquirer = require('inquirer')
 const config = require('./commandConfig.js')
 const main = require('./main.js')
 const dot = require('./dot.js')
+const log = require('./log')
 module.exports = q
 /**
  *  jump is a string of the inquire key
@@ -41,8 +42,11 @@ function q(j) {
     return
   }
   qKeyArray = initQuestions(j)
-  showInquire()
-  
+  if(qKeyArray===undefined){
+    log.NO_QUESTIONS()
+  }else{
+    showInquire()
+  }
 }
 
 
@@ -60,6 +64,7 @@ function initQuestions(coirjson) {
     for (let item in coirjson.inquire) {
       qKeyArray.push(item)
     }
+    
     qKeyArray = qKeyArray.sort((a, b) => {
       a = parseInt(a)
       b = parseInt(b)
