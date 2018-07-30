@@ -18,5 +18,8 @@
 
 我需要复制，粘贴内容，然后再删除掉昨天的错误的内容，虽然这很少，但是这却是重复性的工作，我希望这些操作能变得更高效。
 
+为了更高效的完成这些，我们将内容整理成为几个`Questions`
 
-
+* What's today's date?
+* Are you happy today ?
+* A word about what you did today.
