@@ -1,1 +1,4 @@
 site_name: Coir 2 Document
+pages:
+    - Home: index.md
+    - Guide: guide.md
