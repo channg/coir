@@ -3,13 +3,24 @@
 
 **重复**的工作是让人厌倦的。
 
-比如说每天我都要记录一下今天的心情。
+比如说每天都要完成这样的一个文本文件，来记录一下今天的心情。
+
+```
+data: 2018-7-29
+
+Are you happy today: happy
+
+A word about what you did today : learning
+
+Have a good Day!
+
+```
 
 那么，到了这个时候，我都需要先创建一个`txt`的文本文件
 
 然后找到昨天的文本，复制进入文档内，然后再进行修改，最后得到如下的记录。
 
-<img src="http://i8.pdim.gs/d2a62405de417a554f15d6a8dd0055da.jpeg" width=400></img>
+<img src="https://i.h2.pdim.gs/68ef33b1bb9bd576da309ac2eac3f1e5.gif" ></img>
 
 我需要复制，粘贴内容，然后再删除掉昨天的错误的内容，虽然这很少，但是这却是重复性的工作，我希望这些操作能变得更高效。
 
