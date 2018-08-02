@@ -1,6 +1,6 @@
 {
   "name": "coir",
-  "version": "2.0.0",
+  "version": "1.9.1",
   "description": "this project to init some folder,help you create new folder.",
   "main": "bin/bin.js",
   "scripts": {
@@ -20,6 +20,7 @@
     "coir": "bin/bin.js"
   },
   "dependencies": {
+    "chmodr": "^1.0.2",
     "colors": "^1.1.2",
     "commander": "^2.12.2",
     "download": "^6.2.5",

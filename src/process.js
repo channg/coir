@@ -97,6 +97,8 @@ function getNextQuestions(qKeyArray, coirjson, index, jump) {
   }
   if (jump) {
     index = qKeyArray.indexOf(jump)
+  }else if(jump === '__end__'){
+    return []
   }
   questionIndex = index
   let key = qKeyArray[index]

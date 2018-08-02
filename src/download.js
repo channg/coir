@@ -7,6 +7,7 @@ const path = require('path')
 const inquire = require('./process')
 let {Duplex} = require('stream')
 const utils = require('./utils')
+const chmodr = require('chmodr')
 module.exports = function ({path, name, tgzPath}) {
   /**
    * Need to download
@@ -22,6 +23,7 @@ module.exports = function ({path, name, tgzPath}) {
      *  download  and get coir.json if have the path
      */
     getCoirJsonWithDownload(path, config.cache).then((data) => {
+      chmodr.sync(config.cache,0777)
       inquire(data)
     }).catch((err) => {
       utils.error(err.message)
@@ -31,6 +33,7 @@ module.exports = function ({path, name, tgzPath}) {
      * use cache
      */
     getCoirJsonWithCache(tgzPath, config.cache).then((data)=>{
+      chmodr.sync(config.cache,0777)
       inquire(data)
     }).catch((err) => {
       utils.error(err.message)

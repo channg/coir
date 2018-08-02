@@ -32,7 +32,9 @@ function main(map, json) {
 function compile(fmList, map, fnRex) {
   fmList.forEach((item) => {
     if (item.isFile) {
-      if (new RegExp(fnRex).test(item.fileName)) {
+      
+      if (new RegExp(fnRex).test(item.fileName)||/__([0-9]+)(?:-([0-9]+))?__/.test(item.fileName)) {
+        console.log(item.fileName)
         let fp = path.resolve(item.path, item.fileName)
         let output = fs.readFileSync(path.resolve(item.path, item.fileName), "utf-8")
         replaceOutput(output, map, fp)
