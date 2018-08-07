@@ -18,6 +18,7 @@ function main(map, json) {
     mv(compileFnList, cwd)
     utils.rmdirSync(path.resolve(config.cache, 'package'))
     dot('BUILD')
+    end(map,json)
   }catch (err){
     log.NO_SUCH_DIR()
   }
@@ -123,6 +124,15 @@ function saveConfig(map) {
     utils.outputJsonSync('./.coirrc', j)
   } else {
     utils.outputJsonSync('./.coirrc', {[config.saveConfVlue]: map})
+  }
+  
+}
+
+function end(map,json) {
+  if(json.end){
+    console.log()
+    var end = replaceNum(json.end,map)
+    console.log(end)
   }
   
 }

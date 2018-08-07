@@ -99,3 +99,25 @@ npx coir use
 ```
 ? What's today's date?
 ```
+
+所以当用户输入完成所有的问题，程序就可以根据用户的输入去生成文件。
+
+如何生成呢？
+
+需要特殊的标识去替换文件里的内容，coir使用`__number__`的形式去替换文件，文件名。
+
+
+```
+data: __1__
+
+Are you happy today: __2__
+
+A word about what you did today : __3__
+
+Have a good Day!
+
+```
+
+最后再将文件名修改为`__1__`
+
+这样用户输入完成后`coir`就会自动帮我们生成一个文件了。

@@ -1,6 +1,6 @@
 {
   "name": "coir",
-  "version": "1.9.2",
+  "version": "2.0.0",
   "description": "this project to init some folder,help you create new folder.",
   "main": "bin/bin.js",
   "scripts": {
