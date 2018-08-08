@@ -1,10 +1,11 @@
 {
   "name": "coir",
-  "version": "1.3.4",
+  "version": "2.0.0",
   "description": "this project to init some folder,help you create new folder.",
-  "main": "bin/index.js",
+  "main": "bin/bin.js",
   "scripts": {
-    "test": "node bin/index --version"
+    "test": "node bin/bin --version",
+    "doc": "cd docs-res && mkdocs serve"
   },
   "repository": {
     "type": "git",
@@ -16,17 +17,16 @@
   "author": "xuezhiwen",
   "license": "ISC",
   "bin": {
-    "coir": "./bin/index.js"
+    "coir": "bin/bin.js"
   },
   "dependencies": {
-    "ansi-escapes": "^3.0.0",
+    "chmodr": "^1.0.2",
     "colors": "^1.1.2",
     "commander": "^2.12.2",
     "download": "^6.2.5",
     "fs-extra": "^5.0.0",
-    "progress": "^2.0.0",
-    "q": "^1.5.1",
-    "tar": "^4.1.1",
-    "which": "^1.3.0"
+    "inquirer": "^6.0.0",
+    "left-pad": "^1.3.0",
+    "tar": "^4.1.1"
   }
 }

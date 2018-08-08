@@ -1,9 +1,3 @@
-- [**基础**](README.md)
-    - [起步](started.md)
-    - [配置](cofig.md)
-    - [root目录](rootConfig.md)
-- **高级**
-    - [bin目录](binFolder.md)
-    - [使用配置](useconf.md.md)
-    - [已有项目](ishas.md)
-    - [编译目录](cache.md)
+- **介绍**
+    - [起步](index.md)
+    - [5分钟指南](guide.md)

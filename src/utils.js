@@ -1,30 +1,18 @@
 const fs = require('fs')
 const fse = require('fs-extra')
-const q = require('q');
-var spawn = require('child_process').spawn;
 const paths = require('path')
-const which = require('which')
+require( "colors")
+
 function parseJson(str) {
   return eval('(' +str + ')')
 }
 
-function toExec(cmdStr,options){
-
-  let [first, ...rest] = cmdStr.split(/\s/)
-  if(first === "npm") {
-    first = process.platform === 'win32'?"npm.cmd":"npm"
-  }
-  var deferred  = q.defer()
-  var runner = spawn(which.sync(first),rest,options);
-  runner.on('close', function () {
-    deferred.resolve()
-  });
-  return deferred.promise;
-}
-
-
 function replaceN(str) {
   return str.replace(/\n\s+/gm,'')
+}
+
+function ensureFileSync(path){
+  fse.ensureFileSync(path)
 }
 
 function rmdirSync(path){
@@ -34,6 +22,11 @@ function rmdirSync(path){
 function ensureDirSync(path){
   fse.ensureDirSync(path)
 }
+
+function readJson(path){
+  return fse.readJsonSync(path)
+}
+
 
 function getFileMessageList(path){
   let mList = []
@@ -56,12 +49,27 @@ function copyDir(src, dist, callback) {
   fse.copy()
 }
 
+/**
+ * Unified error message
+ * @param str
+ */
+function error(str){
+  console.log(str.red)
+}
+
+function outputJsonSync(path,obj){
+  fse.outputJsonSync(path,obj)
+}
+
 module.exports = {
   parseJson:parseJson,
   replaceN,replaceN,
   rmdirSync:rmdirSync,
-  toExec:toExec,
+  readJson:readJson,
   getFileMessageList:getFileMessageList,
   copyDir:copyDir,
-  ensureDirSync:ensureDirSync
+  ensureDirSync:ensureDirSync,
+  error:error,
+  ensureFileSync:ensureFileSync,
+  outputJsonSync:outputJsonSync
 }
