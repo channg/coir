@@ -1,3 +1,6 @@
 - **介绍**
     - [起步](index.md)
     - [5分钟指南](guide.md)
+- **配置**
+    - [coir.json](coirJson.md)    
+    - [root目录](rootdoc.md)
