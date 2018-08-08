@@ -25,7 +25,7 @@ program
   .alias('i')
   .description('init the coir package')
   .option("-s, --save [value]", "save the package to cache")
-  .option("-c, --conf [value]", "read the coir_config.json ")
+  .option("-c, --conf [value]", "read the coir .coirrc ")
   .option("-a, --cache [value]", "edit deploy cache path")
   .option("-r, --saveRc [value]", "save the value to .coirrc")
   .action((dir, options) => {
