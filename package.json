@@ -1,11 +1,11 @@
 {
   "name": "coir",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "this project to init some folder,help you create new folder.",
   "main": "bin/bin.js",
   "scripts": {
     "test": "node bin/bin --version",
-    "doc": "cd docs-res && mkdocs serve"
+    "doc": "docsify serve ./docs"
   },
   "repository": {
     "type": "git",

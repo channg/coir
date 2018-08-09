@@ -1,6 +1,7 @@
 - **介绍**
-    - [起步](index.md)
-    - [5分钟指南](guide.md)
+    - [引言](index.md)
+    - [起步](start.md)
+    - [完全指南](guide.md)
     - [命令](command.md)
 - **配置**
     - [coir.json](coirJson.md)    

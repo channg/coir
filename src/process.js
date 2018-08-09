@@ -36,15 +36,15 @@ let qKeyArray = []
 
 function q(j) {
   coirjson = j
-  if(config.useConf===true){
-    dot('USE_RC',config.conf)
+  if (config.useConf === true) {
+    dot('USE_RC', config.conf)
     main(config.conf, coirjson)
     return
   }
   qKeyArray = initQuestions(j)
-  if(qKeyArray===undefined){
+  if (qKeyArray === undefined) {
     log.NO_QUESTIONS()
-  }else{
+  } else {
     showInquire()
   }
 }
@@ -97,7 +97,7 @@ function getNextQuestions(qKeyArray, coirjson, index, jump) {
   }
   if (jump) {
     index = qKeyArray.indexOf(jump)
-  }else if(jump === '__end__'){
+  } else if (jump === '__end__') {
     return []
   }
   questionIndex = index
@@ -140,7 +140,7 @@ function typeInput(item, key) {
       let over = 0
       item.output.forEach((i) => {
         if (check !== true) {
-          check = new RegExp(i.test).test(value)
+          check = new RegExp(i.test || '.*').test(value)
           if (check === false) {
             check = 'Failed validation, please re-enter.'
           } else {
@@ -152,11 +152,16 @@ function typeInput(item, key) {
       })
     } else {
       currentTest = null
-      check = new RegExp(item.output.test).test(value)
-      if (check === false) {
-        check = 'Failed validation, please re-enter.'
+      if (item.output) {
+        check = new RegExp(item.output.test || '.*').test(value)
+        if (check === false) {
+          check = 'Failed validation, please re-enter.'
+        } else {
+          setJump(item.output.jump)
+        }
       } else {
-        setJump(item.output.jump)
+        // if not have the output
+        check = true
       }
     }
     return check
@@ -273,10 +278,14 @@ function checkOut({answer, keyG, currentTest}) {
   currentTest = getCurrentTest(currentTest, answer)
   let data = answer[config.prefix + keyG]
   let output
-  if (currentTest === null) {
-    output = coirjson.inquire[keyG].output.value
-  } else {
-    output = coirjson.inquire[keyG].output[currentTest].value
+  if(coirjson.inquire[keyG].output){
+    if (currentTest === null) {
+      output = coirjson.inquire[keyG].output.value||'__this__'
+    } else {
+      output = coirjson.inquire[keyG].output[currentTest].value||'__this__'
+    }
+  }else{
+    output = '__this__'
   }
   let tr = translateMark(data, output)
   END_DATA[keyG] = tr
