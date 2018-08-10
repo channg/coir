@@ -111,6 +111,9 @@ program
         }
       }
     }
+    /**
+     * saveRc
+     */
     if (options.saveRc) {
       if (options.saveRc === true) {
         log.NO_SAVE_CONF_VALUE()
