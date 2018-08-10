@@ -91,7 +91,35 @@ program
   .command('use [path]')
   .alias('u')
   .description('use the local coir.json,default path ./')
-  .action((path) => {
+  .option("-c, --conf [value]", "read the coir .coirrc ")
+  .option("-r, --saveRc [value]", "save the value to .coirrc")
+  .action((path,options) => {
+    if (options.conf) {
+      if (options.conf === true) {
+        log.NO_CONF_VALUE()
+      } else {
+        try {
+          let rc = utils.readJson('./.coirrc')
+          if (rc[options.conf]) {
+            commandConfig.useConf = true
+            commandConfig.conf = rc[options.conf]
+          } else {
+            log.NOT_FINT_THIS_VALUE(options.conf)
+          }
+        } catch (err) {
+          log.NOT_FIND_COIRRC()
+        }
+      }
+    }
+    if (options.saveRc) {
+      if (options.saveRc === true) {
+        log.NO_SAVE_CONF_VALUE()
+      } else {
+        utils.ensureFileSync('./.coirrc')
+        commandConfig.saveConf = true
+        commandConfig.saveConfValue = options.saveRc
+      }
+    }
     if(path){
       commandConfig.usePath = path
     }

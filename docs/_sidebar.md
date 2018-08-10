@@ -5,4 +5,8 @@
     - [命令](command.md)
 - **配置**
     - [coir.json](coirJson.md)    
+    - [多种类型](type.md)    
     - [root目录](rootdoc.md)
+- **其他**
+    - [使用技巧](skill.md)
+    - [TODO](todo.md)

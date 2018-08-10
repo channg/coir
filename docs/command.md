@@ -17,17 +17,20 @@ coir i --help
 例子:`coir i test -s`
 >将npm 下载的包保存到本地,当下次输入非 -s 命令,将使用本地缓存 ,可以填写value 更换缓存地址,默认为`~/.gcoircache`
 
-* -c,--conf
+* -c,--conf [key]
 
-例子:`coir i test -c `
->当运行命令式,程序将会寻找运行目录下的 .coirrc 文件,这样就不用用户再次输出.
+例子:`coir i test -c key`
 
-* -r,--saveRc
 
-例子:`coir i test -r`
->当用户完成coir指令后,会自动生成.coirrc文件,方便下次不必重复输入
+>当运行命令式,程序将会寻找运行目录下的 .coirrc 文件，寻找key对象，这样就不用用户再次输出.
 
-* -a,--cache
+* -r,--saveRc [key]
+
+例子:`coir i test -r key`
+生成的文件是这种格式https://github.com/channg/coir-test/blob/master/.coirrc
+>当用户完成coir指令后,会自动生成.coirrc文件，将保存到key对象内，方便下次不必重复输入
+
+* -a,--cache [path]
 
 >修改编译文件夹,默认为`~/.coirspace`
 

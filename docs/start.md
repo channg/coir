@@ -21,7 +21,9 @@
 
 这个json文件很直观，不必多解释什么
 
-### 创建root目录，并在root目录下创建`__1__.txt`
+### root目录
+
+创建`root`目录，并在root目录下创建一个空的`__1__.txt`
 
 >root 目录要与coir.json 文件同级，里面存放着所有希望编译的内容。
 
@@ -73,3 +75,11 @@ coir i *
 就可以直接使用刚才与`coir use`相同的事情了。
 
 例如我上传的包叫做`coir-channg`,那么我使用`coir i channg`即可
+
+---
+
+```
+coir i init
+```
+
+使用`coir-init`模块 帮你生成一个可以直接使用的`coir`模块
