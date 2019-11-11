@@ -10,7 +10,7 @@ module.exports = main
 function main(map, json) {
   try {
     saveConfig(map)
-    const cwd = process.cwd()
+    const cwd = path.resolve(process.cwd(),config.path)
     const fnRex = json.fileName||'.*'
     const fmList = utils.getFileMessageList(path.resolve(config.cache, 'package/root'))
     compile(fmList, map, fnRex)
@@ -98,7 +98,7 @@ function mv(fmList, cwd) {
     if (!/__([0-9]+)(?:-([0-9]+))?__/.test(item.fileName)) {
       if (item.isFile) {
         fse.ensureDirSync(cwd)
-        fse.moveSync(item.absolute, path.resolve(cwd, item.fileName), {overwrite: true})
+        fse.moveSync(item.absolute, path.resolve(cwd,item.fileName), {overwrite: true})
       } else {
         fse.ensureDirSync(path.resolve(cwd, item.fileName))
         mv(utils.getFileMessageList(item.absolute), path.resolve(cwd, item.fileName))

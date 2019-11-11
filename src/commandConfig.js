@@ -15,6 +15,7 @@ let config = {
   prefix:'coir',
   saveConf:false,
   saveConfValue:'',
-  usePath:process.cwd()
+  usePath:process.cwd(),
+  path:''
 }
 module.exports = config
