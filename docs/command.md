@@ -34,6 +34,10 @@ coir i --help
 
 >修改编译文件夹,默认为`~/.coirspace`
 
+* -p,--paht [path]
+
+>修改输出文件夹路径 类似`-p ./src`
+
 
 ### clean
 
