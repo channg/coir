@@ -3,6 +3,7 @@ const inquirer = require('inquirer')
 const config = require('./commandConfig.js')
 const main = require('./main.js')
 const dot = require('./dot.js')
+const path = require('path')
 const log = require('./log')
 module.exports = q
 /**
@@ -35,18 +36,18 @@ let coirjson = null
 let qKeyArray = []
 
 function q(j) {
-  coirjson = j
-  if (config.useConf === true) {
-    dot('USE_RC', config.conf)
-    main(config.conf, coirjson)
-    return
-  }
-  qKeyArray = initQuestions(j)
-  if (qKeyArray === undefined) {
-    log.NO_QUESTIONS()
-  } else {
-    showInquire()
-  }
+    coirjson = j
+    if (config.useConf === true) {
+        dot('USE_RC', config.conf)
+        main(config.conf, coirjson)
+        return
+    }
+    qKeyArray = initQuestions(j)
+    if (qKeyArray === undefined) {
+        log.NO_QUESTIONS()
+    } else {
+        showInquire()
+    }
 }
 
 
@@ -56,28 +57,28 @@ function q(j) {
  * @returns {Array}
  */
 function initQuestions(coirjson) {
-  let qKeyArray = []
-  /**
-   * coir2.x coir.json
-   */
-  if (coirjson.inquire) {
-    for (let item in coirjson.inquire) {
-      qKeyArray.push(item)
+    let qKeyArray = []
+    /**
+     * coir2.x coir.json
+     */
+    if (coirjson.inquire) {
+        for (let item in coirjson.inquire) {
+            qKeyArray.push(item)
+        }
+
+        qKeyArray = qKeyArray.sort((a, b) => {
+            a = parseInt(a)
+            b = parseInt(b)
+            if (a < b) {
+                return -1;
+            }
+            if (a > b) {
+                return 1;
+            }
+            return 0;
+        })
+        return qKeyArray
     }
-    
-    qKeyArray = qKeyArray.sort((a, b) => {
-      a = parseInt(a)
-      b = parseInt(b)
-      if (a < b) {
-        return -1;
-      }
-      if (a > b) {
-        return 1;
-      }
-      return 0;
-    })
-    return qKeyArray
-  }
 }
 
 /**
@@ -88,40 +89,40 @@ function initQuestions(coirjson) {
  * @returns {Array}
  */
 function getNextQuestions(qKeyArray, coirjson, index, jump) {
-  let questions = []
-  
-  if (index === null) {
-    index = 0
-  } else {
-    index++
-  }
-  if (jump) {
-    index = qKeyArray.indexOf(jump)
-  } else if (jump === '__end__') {
-    return []
-  }
-  questionIndex = index
-  let key = qKeyArray[index]
-  /**
-   * next inquire not alive
-   */
-  if (!key) {
+    let questions = []
+
+    if (index === null) {
+        index = 0
+    } else {
+        index++
+    }
+    if (jump) {
+        index = qKeyArray.indexOf(jump)
+    } else if (jump === '__end__') {
+        return []
+    }
+    questionIndex = index
+    let key = qKeyArray[index]
+    /**
+     * next inquire not alive
+     */
+    if (!key) {
+        return questions
+    }
+    keyG = key
+    let item = coirjson[key]
+    let type = item.type || 'input'
+    G_TYPE = type
+    if (type === 'input') {
+        questions.push(typeInput(item, key))
+    } else if (type === 'confirm') {
+        questions.push(typeConfirm(item, key))
+    } else if (type === 'list') {
+        questions.push(typeList(item, key))
+    } else if (type === 'editor') {
+        questions.push(typeEditor(item, key))
+    }
     return questions
-  }
-  keyG = key
-  let item = coirjson[key]
-  let type = item.type || 'input'
-  G_TYPE = type
-  if (type === 'input') {
-    questions.push(typeInput(item, key))
-  } else if (type === 'confirm') {
-    questions.push(typeConfirm(item, key))
-  } else if (type === 'list') {
-    questions.push(typeList(item, key))
-  } else if (type === 'editor') {
-    questions.push(typeEditor(item, key))
-  }
-  return questions
 }
 
 /**
@@ -129,126 +130,127 @@ function getNextQuestions(qKeyArray, coirjson, index, jump) {
  * @param item
  */
 function typeInput(item, key) {
-  let question = {}
-  question.name = config.prefix + key
-  question.type = item.type
-  question.message = item.question
-  question.default = item.default
-  question.validate = function (value) {
-    let check = 'Failed validation, please re-enter.'
-    if (Array.isArray(item.output)) {
-      let over = 0
-      item.output.forEach((i) => {
-        if (check !== true) {
-          check = new RegExp(i.test || '.*').test(value)
-          if (check === false) {
-            check = 'Failed validation, please re-enter.'
-          } else {
-            setJump(i.jump)
-            currentTest = over
-          }
-          over++
-        }
-      })
-    } else {
-      currentTest = null
-      if (item.output) {
-        check = new RegExp(item.output.test || '.*').test(value)
-        if (check === false) {
-          check = 'Failed validation, please re-enter.'
+    let question = {}
+    question.name = config.prefix + key
+    question.type = item.type
+    question.message = item.question
+    question.default = item.default
+    question.validate = function (value) {
+        let check = 'Failed validation, please re-enter.'
+        if (Array.isArray(item.output)) {
+            let over = 0
+            item.output.forEach((i) => {
+                if (check !== true) {
+                    check = new RegExp(i.test || '.*').test(value)
+                    if (check === false) {
+                        check = 'Failed validation, please re-enter.'
+                    } else {
+                        setJump(i.jump)
+                        currentTest = over
+                    }
+                    over++
+                }
+            })
         } else {
-          setJump(item.output.jump)
+            currentTest = null
+            if (item.output) {
+                check = new RegExp(item.output.test || '.*').test(value)
+                if (check === false) {
+                    check = 'Failed validation, please re-enter.'
+                } else {
+                    setJump(item.output.jump)
+                }
+            } else {
+                // if not have the output
+                check = true
+            }
         }
-      } else {
-        // if not have the output
-        check = true
-      }
+        return check
     }
-    return check
-  }
-  return question
+    return question
 }
 
 function typeEditor(item, key) {
-  let question = {}
-  question.name = config.prefix + key
-  question.type = item.type
-  question.message = item.question
-  question.default = item.default
-  question.validate = function (value) {
-    let check = 'Failed validation, please re-enter.'
-    if (Array.isArray(item.output)) {
-      let over = 0
-      item.output.forEach((i) => {
-        if (check !== true) {
-          check = new RegExp(i.test).test(value)
-          if (check === false) {
-            check = 'Failed validation, please re-enter.'
-          } else {
-            setJump(i.jump)
-            currentTest = over
-          }
-          over++
+    let question = {}
+    question.name = config.prefix + key
+    question.type = item.type
+    question.message = item.question
+    question.default = item.default
+    question.validate = function (value) {
+        let check = 'Failed validation, please re-enter.'
+        if (Array.isArray(item.output)) {
+            let over = 0
+            item.output.forEach((i) => {
+                if (check !== true) {
+                    check = new RegExp(i.test).test(value)
+                    if (check === false) {
+                        check = 'Failed validation, please re-enter.'
+                    } else {
+                        setJump(i.jump)
+                        currentTest = over
+                    }
+                    over++
+                }
+            })
+        } else {
+            currentTest = null
+            check = new RegExp(item.output.test).test(value)
+            if (check === false) {
+                check = 'Failed validation, please re-enter.'
+            } else {
+                setJump(item.output.jump)
+            }
         }
-      })
-    } else {
-      currentTest = null
-      check = new RegExp(item.output.test).test(value)
-      if (check === false) {
-        check = 'Failed validation, please re-enter.'
-      } else {
-        setJump(item.output.jump)
-      }
+        return check
     }
-    return check
-  }
-  return question
+    return question
 }
 
 
 function typeConfirm(item, key) {
-  let question = {}
-  question.name = config.prefix + key
-  question.type = item.type
-  question.message = item.question
-  question.default = item.default
-  return question
+    let question = {}
+    question.name = config.prefix + key
+    question.type = item.type
+    question.message = item.question
+    question.default = item.default
+    return question
 }
 
 function typeList(item, key) {
-  let question = {}
-  question.name = config.prefix + key
-  question.type = item.type
-  question.message = item.question
-  question.default = item.default
-  question.choices = item.output.map((item) => {
-    return item.test
-  })
-  return question
+    let question = {}
+    question.name = config.prefix + key
+    question.type = item.type
+    question.message = item.question
+    question.default = item.default
+    question.choices = item.output.map((item) => {
+        return item.test
+    })
+    return question
 }
 
 
 function setJump(curjump) {
-  if (curjump) {
-    jump = curjump
-  } else {
-    jump = null
-  }
+    if (curjump) {
+        jump = curjump
+    } else {
+        jump = null
+    }
 }
 
 /**
  * show Inquire
  */
 function showInquire() {
-  let qs = getNextQuestions(qKeyArray, coirjson.inquire, questionIndex, jump)
-  if (qs.length > 0) {
-    point(qs).then((answer) => {
-      checkOut({answer, keyG, currentTest})
-      showInquire()
-    })
-  } else {
-    main(END_DATA, coirjson)
-  }
+    let qs = getNextQuestions(qKeyArray, coirjson.inquire, questionIndex, jump)
+    if (qs.length > 0) {
+        let script = coirjson.inquire[qKeyArray[questionIndex]].script
+        point(qs).then((answer) => {
+            checkOut({answer, keyG, currentTest, script})
+            showInquire()
+        })
+    } else {
+        main(END_DATA, coirjson)
+    }
 }
 
 /**
@@ -257,15 +259,15 @@ function showInquire() {
  * @returns {Promise}
  */
 function point(qs) {
-  return new Promise((resolve) => {
-    inquirer
-      .prompt(
-        qs
-      )
-      .then(answers => {
-        resolve(answers)
-      });
-  })
+    return new Promise((resolve) => {
+        inquirer
+            .prompt(
+                qs
+            )
+            .then(answers => {
+                resolve(answers)
+            });
+    })
 }
 
 /**
@@ -274,42 +276,47 @@ function point(qs) {
  * @param keyG
  * @param currentTest
  */
-function checkOut({answer, keyG, currentTest}) {
-  currentTest = getCurrentTest(currentTest, answer)
-  let data = answer[config.prefix + keyG]
-  let output
-  if(coirjson.inquire[keyG].output){
-    if (currentTest === null) {
-      output = coirjson.inquire[keyG].output.value||'__this__'
+function checkOut({answer, keyG, currentTest, script}) {
+    currentTest = getCurrentTest(currentTest, answer)
+    let data = answer[config.prefix + keyG]
+    let output
+    if (coirjson.inquire[keyG].output) {
+        if (currentTest === null) {
+            output = coirjson.inquire[keyG].output.value !== undefined ? coirjson.inquire[keyG].output.value : '__this__'
+        } else {
+            output = coirjson.inquire[keyG].output[currentTest].value !== undefined ? coirjson.inquire[keyG].output[currentTest].value : '__this__'
+
+        }
     } else {
-      output = coirjson.inquire[keyG].output[currentTest].value||'__this__'
+        output = '__this__'
     }
-  }else{
-    output = '__this__'
-  }
-  let tr = translateMark(data, output)
-  END_DATA[keyG] = tr
+    let tr = translateMark(data, output, script)
+    END_DATA[keyG] = tr
 }
 
-function translateMark(data, output) {
-  let b
-  if (Array.isArray(output)) {
-    b = []
-    output.forEach((item) => {
-      let r = itemT(data, item)
-      b.push(r)
+function translateMark(data, output, script) {
+    let b
+    if (Array.isArray(output)) {
+        b = []
+        output.forEach((item) => {
+            let r = itemT(data, item, script)
+            b.push(r)
+        })
+    } else {
+        b = itemT(data, output, script)
+    }
+    return b
+}
+
+function itemT(data, item, script) {
+    let it = item.replace(/__this__/g, function () {
+        return data
     })
-  } else {
-    b = itemT(data, output)
-  }
-  return b
-}
-
-function itemT(data, item) {
-  let it = item.replace(/__this__/g, function () {
-    return data
-  })
-  return it
+    // 读取用户script 并且运行
+    let userScript = require(path.resolve(config.usePath, 'script.js'))
+    if (script)
+        it = userScript[script](it)
+    return it
 }
 
 /**
@@ -320,19 +327,19 @@ function itemT(data, item) {
  * @returns {*}
  */
 function getCurrentTest(currentTest, answer) {
-  if (G_TYPE === 'input' || G_TYPE === 'editor') {
-    return currentTest
-  } else if (G_TYPE === 'confirm' || G_TYPE === 'list') {
-    let over = -1
-    let ot = coirjson.inquire[keyG].output
-    for (let i = 0; i < ot.length; i++) {
-      if (ot[i].test === answer[config.prefix + keyG] || ot[i].test === answer[config.prefix + keyG].toString()) {
-        setJump(coirjson.inquire[keyG].output[i].jump)
-        over = i
-      }
+    if (G_TYPE === 'input' || G_TYPE === 'editor') {
+        return currentTest
+    } else if (G_TYPE === 'confirm' || G_TYPE === 'list') {
+        let over = -1
+        let ot = coirjson.inquire[keyG].output
+        for (let i = 0; i < ot.length; i++) {
+            if (ot[i].test === answer[config.prefix + keyG] || ot[i].test === answer[config.prefix + keyG].toString()) {
+                setJump(coirjson.inquire[keyG].output[i].jump)
+                over = i
+            }
+        }
+        return over
     }
-    return over
-  }
 }
 
 
