@@ -313,9 +313,13 @@ function itemT(data, item, script) {
         return data
     })
     // 读取用户script 并且运行
+    try{
     let userScript = require(path.resolve(config.cache, 'package/script.js'))
     if (script)
         it = userScript[script](it)
+    }catch(err){
+        //出错继续执行
+    }
     return it
 }
 
