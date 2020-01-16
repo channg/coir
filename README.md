@@ -1,5 +1,5 @@
 <p align="center">
-  <a href="https://docsify.js.org">
+  <a href="https://coir.js.org">
     <img alt="docsify" src="./docs/img/logo.svg">
   </a>
 </p>
